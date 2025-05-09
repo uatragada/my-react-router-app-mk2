@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  background-image: url("./assets/topography.svg");
+  transition: background-color 1.4s ease-in-out, color 2.8s ease-in-out;
+  background-blend-mode: multiply;
+  background-color: var(--color-bg);
+  columns: var(--color-fg);
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  
+}
+
+.hover-animate {
+  transition: transform .99s ease-in-out;
+}
+
+.hover-animate:hover {
+  transform: scale(1.2); /* Scaling up the icons */
+}
+
+.hover-animate {
+  transform: scale(1); /* Reset to original size when hover ends */
+}
+
+.linkIcon{
+  
+}
+
+@keyframes linkIconBlink {
+  0% {
+    
+  }
+  50% {
+    filter:drop-shadow(0px 0px 50px rgb(255, 255, 255,1));
+  }
+  100% {
+    
+  }
+}
+.linkIcon:hover {
+  
+  animation-duration: 2.4s;
+  animation-name: linkIconBlink;
+  animation-iteration-count: infinite;
+  animation-fill-mode: both;
+  stroke:var(--color-fg);
+  fill:var(--color-fg);
+}
+
+:root {
+  --color-bg: #fff5ee;
+  --color-fg: #121212;
+}
+
+.dark {
+  --color-bg: #0a0a0a;
+  --color-fg: #fafafa;
+}
+
+* {
+  transition: background-color 1.4s ease, color 1.4s ease, border-color 1.4s ease;
+}

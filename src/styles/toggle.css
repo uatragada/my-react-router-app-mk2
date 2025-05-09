@@ -1,0 +1,201 @@
+:root {
+    /** sunny side **/
+    --white-background: #fafafa;
+    --white-border: #fafafa;
+    --white-color: #fafafa;
+    --black-background: #121212;
+    --black-border: #121212;
+    /** dark side **/
+    --black-background: #121212;
+    --black-border: #121212;
+    --black-color: #000000;
+    --gray-border: #e8e8ea;
+    --gray-dots: #e8e8ea;
+}
+
+@keyframes reverse {
+    0% {
+        top: 50%;
+        height: 20px;
+        transform: translateY(-50%);
+        rotate: 90deg;
+    }
+    60% {
+        top: 10%;
+        height: 20%;
+    }
+    100% {
+        top: 10%;
+        height: 80%;
+        rotate: 0deg;
+    }
+}
+
+@keyframes switch {
+    0% {
+        top: 10%;
+        height: 80%;
+    }
+    60% {
+        top: 10%;
+        height: 20px;
+        transform: translateY(-50%);
+        
+    }
+    100% {
+        top: 50%;
+        height: 20px;
+        transform: translateY(-50%);
+        rotate: 90deg;
+    }
+}
+.toggle--checkbox {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 64px;
+    height: 64px;    
+    opacity: 0;
+    z-index: 2;
+    cursor: pointer;
+  }
+.toggle--checkbox:focus + .toggle--label {
+    outline: solid 3px var(--button-border);
+    transition: outline 100ms ease-in;
+}
+
+.container--toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 60px;
+    grid-area: toggle;
+  }
+
+/* background dark mode enabled */
+.toggle--label {
+    width: 64px;
+    height: 64px;
+    background: var(--black-color);
+    border-radius: 50%;
+    display: flex;
+    position: relative;
+    transition: all 1350ms ease-in;
+    color: var(--black-color);
+    border-color: var(--black-border);
+}
+
+.toggle--checkbox:checked + .toggle--label {
+    background: var(--white-color);
+    color: var(--black-color);
+    border-color: var(--black-border);
+}
+
+/* Dark to Light */
+.toggle--checkbox:checked + .toggle--label:before {
+    animation-name: reverse;
+    animation-duration: 800ms;
+    animation-fill-mode: forwards;
+    transition: all 360ms ease-in;
+    background: var(--black-background);
+    border-color: var(--black-border);
+}
+
+/*Light to dark*/
+.toggle--label:before {
+    animation-name: switch;
+    animation-duration: 1350ms;
+    animation-fill-mode: forwards;
+    content: '';
+    width: 10px;
+    height: 32px;
+    border: 3px solid var(--gray-border);
+    top: 0px;
+    left: 27px;
+    position: absolute;
+    border-radius: 0px;
+    background: var(--white-color);
+}
+
+
+
+.toggle--checkbox:checked + .toggle--label:after {
+    transition-delay: 50ms;
+    opacity: 0;
+}
+
+/* clouds */
+.toggle--checkbox:checked + .toggle--label .toggle--label-background {
+    width: 5px;
+    left: 65px;
+    top: 22px;
+}
+
+.toggle--checkbox:checked + .toggle--label .toggle--label-background:before {
+    top: -4px;
+    left: -5px;
+    width: 20px;
+    height: 5px;
+}
+
+.toggle--checkbox:checked + .toggle--label .toggle--label-background:after {
+    top: 3px;
+    width: 20px;
+    height: 5px;
+    left: -10px;
+}
+
+.toggle--text-container {
+    position: relative;
+    width: 64px;
+    height: 20px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  
+  .toggle--text-wrapper {
+    position: relative;
+    width: 200%; /* hold both texts */
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+  }
+  
+  .toggle--text-wrapper.light-mode {
+    transform: translateX(0%); /* Show Light */
+  }
+  
+  .toggle--text-wrapper.dark-mode {
+    transform: translateX(-50%); /* Show Dark */
+  }
+  
+  .toggle--text {
+    width: 64px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 20px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Sliding Bar Animation */
+  .toggle--slide-bar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 64px;
+    background-color: var(--gray-border);
+    z-index: 0;
+    transition: transform 1.4s ease-in-out;
+    border-radius: 10px;
+    opacity: 0.5;
+  }
+  
+  /* When in light mode, bar slides in from right */
+  .toggle--text-wrapper.light-mode .toggle--slide-bar {
+    transform: translateX(0%);
+  }
+  
+  /* When in dark mode, bar slides in from left */
+  .toggle--text-wrapper.dark-mode .toggle--slide-bar {
+    transform: translateX(100%);
+  }
