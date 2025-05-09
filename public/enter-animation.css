@@ -1,0 +1,15 @@
+html, body {
+    opacity: 0;
+    transform: translateY(30px) scale(0.98);
+    filter: blur(5px);
+    transition:
+      opacity 1.2s ease-out,
+      transform 1.2s ease-out,
+      filter 1.2s ease-out;
+  }
+  
+  html.loaded, body.loaded {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }

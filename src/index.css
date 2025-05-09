@@ -52,7 +52,7 @@ body {
 }
 
 :root {
-  --color-bg: #fff5ee;
+  --color-bg: #fafafa;
   --color-fg: #121212;
 }
 
@@ -62,5 +62,18 @@ body {
 }
 
 * {
-  transition: background-color 1.4s ease, color 1.4s ease, border-color 1.4s ease;
+  transition:
+    background-color 2.8s ease,
+    color 2.8s ease,
+    border-color 2.8s ease,
+    fill 2.8s ease,
+    stroke 2.8s ease,
+    filter 2.8s ease;
+}
+
+html, body {
+  min-height: 100%;
+}
+body {
+  min-height: 100vh;
 }
