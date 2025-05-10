@@ -2,12 +2,13 @@
 :root {
     --color-bg: #fafafa;
     --color-fg: #121212;
-    --color-checked: 	#fb2e01;
+    --color-checked: #414141;
+    ;
     --color-transparent: rgba(0, 0, 0, 0);
     --square-width-before: 64px;
     --square-width-after: 256px;
     --square-height-before: 64px;
-    --square-height-after: 32px;
+    --square-height-after: 24px;
 
 }
 
@@ -44,7 +45,7 @@
     opacity: 0;
     position: absolute;
     min-width: var(--square-width-after);
-    top: 36px;
+    top: calc(var(--square-height-after) + 4px);
     background-color: var(--color-fg);
     color: var(--color-bg);
     height: auto;
@@ -53,12 +54,10 @@
     transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
-.dropdown-items{
-    opacity: 0;
-    transform: translateY(-10px);
+.dropdown-item{
+    padding: 4px 8px;
     color: var(--color-bg);
-    animation: drowndown-item-appear 1s ease-in-out forwards;
-    font-size: 10000;
+    
 }
 .dropdown-toggle:checked{
     height: var(--square-height-after);
@@ -96,11 +95,12 @@
 /*Animation Style for Dropdown Items */
 @keyframes dropdown-item-appear {
     0% {
-        opacity: 0;
+        transform: translateY(0px);
+    }
+    50% {
         transform: translateY(-10px);
     }
     100% {
-        opacity: 1;
         transform: translateY(0);
     }
 }
@@ -112,9 +112,13 @@
         transform: translateY(0);
         
     }
+    50% {
+        opacity: 1;
+        transform: translateY(10%);
+    }
     100% {
         opacity: 1;
-        transform: translateY(1);
+        transform: translateY(0);
     }
 }
 
@@ -127,7 +131,7 @@
 .dropdown-toggle:checked .dropdown-toggle{
     animation: nav-dropdown 0.5s forwards;
     transition: all 0.5s ease-in-out;
-    top: 36px;
+    top: calc(var(--square-height-after) + 4px);
 }
 
 .dropdown-toggle:checked ~ .dropdown-content {
@@ -145,4 +149,17 @@
 .dark .dropdown-content {
     background-color: var(--color-transparent);
     color: var(--color-fg);
+}
+.light .dropdown-item {
+    color: var(--color-bg); 
+}
+.dark .dropdown-item{
+    color: var(--color-fg);
+
+}
+.dropdown-item:hover {
+    background-color: var(--color-checked);
+    color: var(--color-bg);
+    animation: dropdown-item-appear .25s forwards;
+    animation-delay: .1s;
 }

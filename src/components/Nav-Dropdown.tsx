@@ -9,13 +9,19 @@ function NavDropdown() {
       <div className="dropdown-content">
         <ul className="dropdown-list">
           <li className="dropdown-item">
-            <a href="#about">About</a>
+            <a href="#about">/about</a>
           </li>
           <li className="dropdown-item">
-            <a href="#projects">Projects</a>
+            <a href="#projects">/projects</a>
           </li>
           <li className="dropdown-item">
-            <a href="#contact">Contact</a>
+            <a href="#blog">/blog</a>
+          </li>
+          <li className="dropdown-item">
+            <a href="#photography">/photography</a>
+          </li>
+          <li className="dropdown-item">
+            <a href="#contact">/contact</a>
           </li>
         </ul>
       </div>
