@@ -14,9 +14,11 @@ function App() {
       <div className="nav-dropdown-container">
         <NavDropdown />
       </div>
-      <div className="dark-mode-toggle-container">
-        <DarkModeToggle />
-      </div>
+      {location.pathname !== "/" && (
+        <div className="dark-mode-toggle-container">
+          <DarkModeToggle />
+        </div>
+      )}
       <Routes>
         <Route path="/" element={<Welcome />} />
         <Route path="/about" element={<About />} />
