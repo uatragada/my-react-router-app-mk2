@@ -9,7 +9,7 @@ function NavDropdown() {
       <div className="dropdown-content">
         <ul className="dropdown-list">
           <li className="dropdown-item">
-            <a href="/">/</a>
+            <a href="/">/home</a>
           </li>
           <li className="dropdown-item">
             <a href="/about">/about</a>
