@@ -4,6 +4,8 @@
 
 html,
 body {
+  font-family: 'Inter', sans-serif; /* Set Inter as the global font */
+
   background-image: url("./assets/topography.svg");
   transition: background-color 1.4s ease-in-out, color 2.8s ease-in-out;
   background-blend-mode: multiply;
@@ -71,9 +73,18 @@ body {
     filter 2.8s ease;
 }
 
+.nav-dropdown-container {
+  position: absolute;
+  top: 32px; /* Add some spacing from the top */
+  left: 32px; /* Add some spacing from the left */
+  z-index: 10; /* Ensure it stays above other elements */
+}
+
+
 html, body {
   min-height: 100%;
 }
 body {
   min-height: 100vh;
 }
+

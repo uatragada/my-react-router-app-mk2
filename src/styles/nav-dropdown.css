@@ -1,0 +1,141 @@
+/* Just some colors  and sizing variables */
+:root {
+    --color-bg: #fafafa;
+    --color-fg: #121212;
+    --color-checked: 	#fb2e01;
+    --square-width-before: 64px;
+    --square-width-after: 256px;
+    --square-height-before: 64px;
+    --square-height-after: 8px;
+
+}
+
+
+/* Initial Dropdown Square Style */
+.dropdown-square {
+    display: block;
+    position: absolute;
+    display: inline-block;
+    background-color: var(--color-fg);
+    height: var(--square-height-before);
+    width: var(--square-width-before);
+    transition: all 0.5s ease-in-out;
+    animation: nav-backup 0.5s forwards;
+}
+
+/* Checkbox for toggling Dropdown */
+.dropdown-toggle{
+    opacity: 0;
+    pointer-events: all;
+    width: var(--square-width-before);
+    height: var(--square-height-before);
+    z-index:2;
+    cursor: pointer;
+    position: absolute;
+    display:inline-block;
+    
+    
+}
+
+
+/* Style for Dropdown Content */
+.dropdown-content {
+    opacity: 0;
+    position: absolute;
+    min-width: var(--square-width-after);
+    top: 12px;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    height: auto;
+    width: 64px;
+    z-index: 0;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.dropdown-items{
+    opacity: 0;
+    transform: translateY(-10px);
+    color: var(--color-bg);
+    animation: drowndown-item-appear 1s ease-in-out forwards;
+}
+.dropdown-toggle:checked{
+    height: var(--square-height-after);
+    width: var(--square-width-after);
+}
+
+/* Both hover and checked states will show the dropdown content */
+/*.dropdown-toggle:hover + .dropdown-content {
+    display: block;
+}*/
+
+
+/* Animation Style for Dropdown */
+@keyframes nav-dropdown {
+    0% {
+        width: var(--square-width-before);
+        height: var(--square-height-before);
+    }
+    100% {
+        width: var(--square-width-after);
+        height: var(--square-height-after);
+    }
+}
+/* Animation Style for closing */
+@keyframes nav-backup {
+    0% {
+        width: var(--square-width-after);
+        height: var(--square-height-after);
+    }
+    100% {
+        width: var(--square-width-before);
+        height: var(--square-height-before);
+    }
+}
+/*Animation Style for Dropdown Items */
+@keyframes dropdown-item-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Animation Style for Dropdown content block */
+@keyframes dropdown-content-appear {
+    0% {
+        opacity: 0;
+        transform: translateY(0);
+        
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(1);
+    }
+}
+
+.dropdown-toggle:checked + .dropdown-square{
+    animation: nav-dropdown .5s forwards;
+    background-color: var(--color-checked);
+    transition: all .5s ease-in-out;
+}
+
+.dropdown-toggle:checked .dropdown-toggle{
+    animation: nav-dropdown 0.5s forwards;
+    transition: all 0.5s ease-in-out;
+    top: 12px;
+}
+
+.dropdown-toggle:checked ~ .dropdown-content {
+    display: block;
+    opacity:0;
+    animation: dropdown-content-appear .5s forwards;
+    animation-delay: .75s;
+}
+
+.light ~ .dropdown-content {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+}
