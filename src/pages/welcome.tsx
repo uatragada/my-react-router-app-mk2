@@ -2,7 +2,7 @@ import nameLogo from "../assets/name-logo.svg";
 import React, { useRef, useEffect, useState } from "react";
 import DarkModeToggle from "../components/Toggle";
 import NavDropdown from "../components/Nav-Dropdown";
-
+import "../styles/welcome.css";
 
 export function Welcome() {
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -43,11 +43,8 @@ export function Welcome() {
   };
 
   return (
-    <main className="flex items-center justify-center pt-16 pb-4">
+    <main className="welcome-container flex items-center justify-center pt-16 pb-4">
       <div className="flex-1 flex flex-col items-center gap-8 min-h-0">
-        <div className = "nav-dropdown-container">
-          <NavDropdown/>
-        </div>
         <header className="flex flex-col items-center gap-9">
           <div className="w-[800px] max-w-[300vw] p-4">
             <img
