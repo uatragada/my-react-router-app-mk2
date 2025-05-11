@@ -7,13 +7,14 @@ body {
   font-family: 'Inter', sans-serif; /* Set Inter as the global font */
 
   background-image: url("./assets/topography.svg");
-  transition: background-color 1.4s ease-in-out, color 2.8s ease-in-out;
+  
   background-blend-mode: multiply;
   background-color: var(--color-bg);
   columns: var(--color-fg);
+  color: var(--color-fg);
   --mouse-x: 50%;
   --mouse-y: 50%;
-  
+  /*transition: background-color 1.4s ease-in-out, color 2.8s ease-in-out;*/
 }
 
 .hover-animate {
@@ -53,12 +54,12 @@ body {
   fill:var(--color-fg);
 }
 
-:root {
+:root.light {
   --color-bg: #fafafa;
   --color-fg: #121212;
 }
 
-.dark {
+:root.dark {
   --color-bg: #0a0a0a;
   --color-fg: #fafafa;
 }
@@ -88,3 +89,9 @@ body {
   min-height: 100vh;
 }
 
+svg path[data-hover="true"] {
+  stroke: red;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 0 6px red);
+  transition: stroke 0.3s, filter 0.3s;
+}

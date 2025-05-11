@@ -3,6 +3,7 @@ import "../styles/toggle.css";
 import { setTheme } from "../utils/themes";
 
 function Toggle() {
+
   const darkLabel = "color mode toggle, dark mode";
   const lightLabel = "color mode toggle, light mode";
 

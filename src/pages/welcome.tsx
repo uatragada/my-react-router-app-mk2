@@ -43,7 +43,10 @@ export function Welcome() {
   };
 
   return (
-    <main className="welcome-container flex items-center justify-center pt-16 pb-4">
+    <main className="welcome-container flex items-center justify-center pt-16 pb-4"
+      ref={containerRef}
+      onMouseMove = {handleMouseMove}
+    >
       <div className="flex-1 flex flex-col items-center gap-8 min-h-0">
         <header className="flex flex-col items-center gap-9">
           <div className="w-[800px] max-w-[300vw] p-4">
@@ -57,11 +60,11 @@ export function Welcome() {
         </header>
         <div className="max-w-[400px] w-full space-y-6 px-4 ">
           <nav className="">
-            <ul className="flex flex-row gap-12 justify-center items-center">
+            <ul className="flex flex-row gap-12 justify-center items-center animate-from-bottom">
               {resources.map(({ href, icon }) => (
                 <li
                   key={href}
-                  className="w-16 h-16 flex items-center justify-center linkIcon"
+                  className="w-16 h-16 flex items-center justify-center linkIcon "
                 >
                   <a
                     className="w-full h-full flex items-center justify-center"

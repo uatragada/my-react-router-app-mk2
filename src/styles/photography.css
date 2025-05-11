@@ -1,0 +1,44 @@
+.photography-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding: 24px;
+}
+
+.title {
+    font-size: 2rem;
+    color: var(--color-fg);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive grid */
+    grid-auto-rows: 10px; /* Base row height */
+    gap: 16px;
+    width: 100%;
+    max-width: 1200px;
+  }
+  
+  .photo-item {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    grid-row: span calc(var(--photo-height, 100) / 10); /* Fallback to 100px if --photo-height is not set */
+  }
+  
+  .photo {
+    width: 100%;
+    height: auto; /* Maintain the natural aspect ratio of the image */
+    object-fit: cover; /* Ensure the image fills its container */
+    transition: transform 0.3s ease;
+  }
+  
+  .photo:hover {
+    transform: scale(1.05); /* Zoom effect on hover */
+  }
