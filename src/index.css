@@ -14,8 +14,23 @@ body {
   color: var(--color-fg);
   --mouse-x: 50%;
   --mouse-y: 50%;
+
+  
   /*transition: background-color 1.4s ease-in-out, color 2.8s ease-in-out;*/
 }
+
+@keyframes drift {
+  0% {
+    background-position: 0 0;
+  }
+  50% {
+    background-position: 100px 100px;
+  }
+  100% {
+    background-position: 0 0;
+  }
+}
+
 
 .hover-animate {
   transition: transform .99s ease-in-out;
@@ -56,7 +71,7 @@ body {
 
 :root.light {
   --color-bg: #fafafa;
-  --color-fg: #121212;
+  --color-fg: #0a0a0a;
 }
 
 :root.dark {

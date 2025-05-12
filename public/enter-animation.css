@@ -1,11 +1,9 @@
 /* Base styles for hidden elements */
 html, body {
   opacity: 0;
-  transform: translateY(30px) scale(0.98);
   filter: brightness(1);
   transition:
     opacity 1.2s ease-out,
-    transform 1.2s ease-out,
     filter 1.2s ease-out;
 }
 
