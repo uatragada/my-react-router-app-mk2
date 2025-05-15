@@ -47,7 +47,6 @@ export default function Photography() {
                   alt={`Photo ${index + 1}`}
                   className="photo"
                   loading="lazy"
-                  onLoad={(e) => handleImageLoad(e, index)} // Calculate height on load
                 />
               </a>
             </div>
