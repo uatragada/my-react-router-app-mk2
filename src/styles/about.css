@@ -8,15 +8,17 @@
   --color-fg: #fafafa;
 }
 
+:root {
+  --color-orange: #fb2e01;
+}
 
 
 
 .about-header {
   font-size: 2em;
   color: var(--color-bg);
-  border: 1px solid var(--color-bg);
   background-color: var(--color-fg);
-
+  
 }
 
 .about-container{
@@ -24,8 +26,10 @@
     justify-content: center;
     align-items: center;
     
+    
 }
 
 .about-text {
     background-color: var(--color-bg);
+
 }

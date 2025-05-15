@@ -31,13 +31,8 @@ export default function Photography() {
   };
 
   return (
-    <main className="photography-container flex items-center justify-center pt-24 pb-4">
-      <div className="flex-1 flex flex-col items-center gap-8 min-h-0">
-        <header className="flex flex-col items-center gap-9">
-          <div className="w-[800px] max-w-[300vw] p-4 title">
-            <h1>My Photography</h1>
-          </div>
-        </header>
+    <main className="photography-container flex items-center justify-center pt-32 pb-4">
+      <div className="flex-1 flex flex-col items-center gap-8 min-h-64">
         <section className="photos-grid">
           {gallery.map((photo, index) => (
             <div key={index} className="photo-item">
@@ -46,7 +41,7 @@ export default function Photography() {
                   src={photo}
                   alt={`Photo ${index + 1}`}
                   className="photo"
-                  loading="lazy"
+                  loading="eager"
                 />
               </a>
             </div>
