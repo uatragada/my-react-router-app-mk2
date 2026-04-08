@@ -11,6 +11,25 @@
     --black-color: #000000;
     --gray-border: #e8e8ea;
     --gray-dots: #e8e8ea;
+    --toggle-glass-bg: rgb(255 255 255 / 12%);
+    --toggle-glass-highlight: rgb(255 255 255 / 42%);
+    --toggle-glass-rim: rgb(0 0 0 / 56%);
+    --toggle-glass-rim-clear: rgb(0 0 0 / 0%);
+    --toggle-glass-border-width: 2px;
+    --toggle-glass-surface: var(--toggle-glass-bg);
+    --toggle-glass-filter: blur(1px) saturate(140%);
+}
+
+:root.dark {
+    --toggle-glass-bg: rgb(255 255 255 / 5%);
+    --toggle-glass-highlight: rgb(255 255 255 / 46%);
+    --toggle-glass-rim: rgb(255 255 255 / 34%);
+    --toggle-glass-rim-clear: rgb(0 0 0 / 0%);
+    --toggle-glass-surface:
+        radial-gradient(circle at 34% 28%, rgb(255 255 255 / 3%), transparent 34%),
+        radial-gradient(circle at 72% 78%, rgb(255 255 255 / 2%), transparent 38%),
+        var(--toggle-glass-bg);
+    --toggle-glass-filter: blur(4px) saturate(190%) contrast(112%);
 }
 
 @keyframes reverse {
@@ -76,19 +95,55 @@
 .toggle--label {
     width: 64px;
     height: 64px;
-    background: var(--black-color);
+    background: var(--toggle-glass-surface);
     border-radius: 50%;
     display: flex;
     position: relative;
+    overflow: hidden;
+    isolation: isolate;
     transition: all 1350ms ease-in;
+    color: var(--black-color);
+    border-color: var(--black-border);
+    box-shadow:
+        inset 0 2px 2px rgb(0 0 0 / 8%),
+        inset 0 -3px 4px rgb(255 255 255 / 8%),
+        0 6px 8px -4px rgb(0 0 0 / 22%),
+        0 0 0.08rem 0.16rem inset rgb(255 255 255 / 8%);
+    backdrop-filter: var(--toggle-glass-filter);
+    -webkit-backdrop-filter: var(--toggle-glass-filter);
+}
+
+.toggle--checkbox:checked + .toggle--label {
+    background: var(--toggle-glass-surface);
     color: var(--black-color);
     border-color: var(--black-border);
 }
 
-.toggle--checkbox:checked + .toggle--label {
-    background: var(--white-color);
-    color: var(--black-color);
-    border-color: var(--black-border);
+.toggle--label::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    padding: var(--toggle-glass-border-width);
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            from -75deg at 50% 50%,
+            var(--toggle-glass-rim),
+            var(--toggle-glass-rim-clear) 5% 40%,
+            var(--toggle-glass-rim) 50%,
+            var(--toggle-glass-rim-clear) 60% 95%,
+            var(--toggle-glass-rim)
+        ),
+        linear-gradient(180deg, var(--toggle-glass-highlight), var(--toggle-glass-highlight));
+    box-shadow:
+        inset 0 0 0 1px rgb(255 255 255 / 34%),
+        0 0 0 0.5px rgb(0 0 0 / 12%);
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events: none;
 }
 
 /* Dark to Light */
@@ -113,6 +168,7 @@
     top: 0px;
     left: 27px;
     position: absolute;
+    z-index: 1;
     border-radius: 0px;
     background: var(--white-color);
 }
@@ -121,7 +177,6 @@
 
 .toggle--checkbox:checked + .toggle--label:after {
     transition-delay: 50ms;
-    opacity: 0;
 }
 
 /* clouds */
@@ -200,12 +255,22 @@
     transform: translateX(100%);
   }
 
-  .dark-mode-toggle-container {
-    position: fixed; /* Fix it to the viewport */
-    bottom: 32px; /* Distance from the bottom */
-    right: 32px; /* Distance from the left */
-    z-index: 10; /* Ensure it stays above other elements */
+.dark-mode-toggle {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-height: 60px;
+    grid-area: toggle;
 }
 
-
-
+  .dark-mode-toggle-container {
+    position: fixed;
+    display: grid;
+    place-items: center;
+    width: 64px;
+    height: 64px;
+    min-height: 60px;
+    grid-area: toggle;
+    inset: auto 32px 32px auto;
+    z-index: 10;
+}

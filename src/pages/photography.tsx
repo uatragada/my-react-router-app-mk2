@@ -1,52 +1,59 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { getPhotos, type Photo } from "../lib/sanityContent";
+import { sanityImageUrl } from "../lib/sanity";
 import "../styles/photography.css"; // Import your CSS file
 
 export default function Photography() {
-  const [gallery, setGallery] = useState<string[]>([]); // State to store resolved photo URLs
+  const [gallery, setGallery] = useState<Photo[]>([]);
+  const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
     const loadPhotos = async () => {
-      const photos = import.meta.glob("../assets/photography/*.{png,jpg,jpeg,gif,webp}");
-      const photoUrls = await Promise.all(
-        Object.values(photos).map(async (importPhoto) => {
-          const photo = await importPhoto(); // Resolve the promise
-          return (photo as { default: string }).default; // Get the default export (the file path)
-        })
-      );
-      setGallery(photoUrls); // Update the state with resolved photo URLs
+      try {
+        const photos = await getPhotos();
+        setGallery(photos);
+        setStatus("ready");
+      } catch (error) {
+        console.error("Failed to load photos from Sanity", error);
+        setStatus("error");
+      }
     };
 
     loadPhotos();
   }, []);
 
-  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement, Event>, index: number) => {
-    const img = e.currentTarget;
-    const height = img.naturalHeight;
-    console.log(`Image ${index} height:`, height); // Debug: Log the height of each image
-    const photoItem = document.querySelectorAll(".photo-item")[index] as HTMLElement;
-    if (photoItem) {
-      photoItem.style.setProperty("--photo-height", `${height}`);
-      console.log(`Set --photo-height for photo-item ${index}:`, height); // Debug: Log the applied height
-    }
-  };
-
   return (
     <main className="photography-container flex items-center justify-center pt-32 pb-4">
       <div className="flex-1 flex flex-col items-center gap-8 min-h-64">
-        <section className="photos-grid">
-          {gallery.map((photo, index) => (
-            <div key={index} className="photo-item">
-              <a href={photo} target="_blank" rel="noopener noreferrer">
-                <img
-                  src={photo}
-                  alt={`Photo ${index + 1}`}
-                  className="photo"
-                  loading="eager"
-                />
-              </a>
-            </div>
-          ))}
-        </section>
+        {status === "loading" && <p className="gallery-status">Loading photographs...</p>}
+        {status === "error" && <p className="gallery-status">Photographs are unavailable right now.</p>}
+        {status === "ready" && gallery.length === 0 && <p className="gallery-status">Photographs coming soon.</p>}
+        {gallery.length > 0 && (
+          <section className="photos-grid" aria-label="Photography gallery">
+            {gallery.map((photo, index) => {
+              const previewUrl = sanityImageUrl(photo.image, { width: 500, height: 750, fit: "crop" });
+              const fullUrl = photo.originalUrl || sanityImageUrl(photo.image, { width: 2400, fit: "max" });
+              const alt = photo.alt || photo.title || `Photograph ${index + 1}`;
+
+              return (
+                <figure key={photo._id} className="photo-item">
+                  <a href={fullUrl} target="_blank" rel="noopener noreferrer">
+                    <img
+                      src={previewUrl}
+                      alt={alt}
+                      className="photo"
+                      width="500"
+                      height="750"
+                      loading={index < 4 ? "eager" : "lazy"}
+                      decoding="async"
+                    />
+                  </a>
+                  {photo.caption && <figcaption className="photo-caption">{photo.caption}</figcaption>}
+                </figure>
+              );
+            })}
+          </section>
+        )}
       </div>
     </main>
   );

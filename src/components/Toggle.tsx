@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import "../styles/toggle.css";
-import { setTheme } from "../utils/themes";
 
 function Toggle() {
 
@@ -13,7 +12,11 @@ function Toggle() {
   const changeThemeAndToggle = () => {
     const html = document.documentElement;
     const isDark = html.classList.contains("dark");
-    console.log("isDark", isDark);
+    html.classList.add("theme-transition");
+    window.setTimeout(() => {
+      html.classList.remove("theme-transition");
+    }, 650);
+
     if (isDark) {
       html.classList.remove("dark");
       localStorage.setItem("theme", "light");
@@ -52,7 +55,7 @@ function Toggle() {
 
   return (
     <div
-      className="container--toggle w-16 h-16 flex items-center justify-center cursor-pointer"
+      className="dark-mode-toggle w-16 h-16 flex items-center justify-center cursor-pointer"
       title="color mode toggle"
     >
       <input
@@ -72,5 +75,4 @@ function Toggle() {
     </div>
   );
 }
-console.log("Toggle component rendered with theme");
 export default Toggle;

@@ -1,12 +1,10 @@
 import nameLogo from "../assets/name-logo.svg";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef } from "react";
 import DarkModeToggle from "../components/Toggle";
-import NavDropdown from "../components/Nav-Dropdown";
 import "../styles/welcome.css";
 
 export function Welcome() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [className, setClassName] = useState<string>("theme-dark");
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!containerRef.current) return;
@@ -60,7 +58,7 @@ export function Welcome() {
         </header>
         <div className="max-w-[400px] w-full space-y-6 px-4 ">
           <nav className="">
-            <ul className="flex flex-row gap-12 justify-center items-center animate-from-bottom">
+            <ul className="welcome-icon-row flex flex-row gap-12 justify-center items-center animate-from-bottom">
               {resources.map(({ href, icon }) => (
                 <li
                   key={href}
