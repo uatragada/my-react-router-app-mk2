@@ -1,0 +1,165 @@
+.pong-play-page {
+  min-height: 100vh;
+  padding: 7.5rem 1rem 3rem;
+  color: var(--color-fg);
+}
+
+.pong-play-shell {
+  width: min(1000px, 94vw);
+  margin: 0 auto;
+}
+
+.pong-play-heading {
+  display: grid;
+  gap: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.pong-play-heading h1 {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  color: var(--color-bg);
+  background: var(--color-fg);
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  line-height: 0.95;
+  overflow-wrap: anywhere;
+}
+
+.pong-play-heading p {
+  max-width: 68ch;
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.pong-stage {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-fg) 22%, transparent);
+  background: #101218;
+}
+
+.pong-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 3 / 2;
+  touch-action: none;
+  cursor: crosshair;
+}
+
+.pong-controls-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  margin-top: 1px;
+  background: color-mix(in srgb, var(--color-fg) 20%, transparent);
+}
+
+.pong-controls-row > div {
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  background: var(--color-bg);
+}
+
+.pong-controls-row p {
+  margin: 0;
+}
+
+.pong-label {
+  margin-bottom: 0.35rem !important;
+  color: var(--color-checked);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.pong-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.pong-actions button,
+.pong-actions a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid var(--color-fg);
+  border-radius: 6px;
+  color: var(--color-fg);
+  background: var(--color-bg);
+  font: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.pong-actions button:hover,
+.pong-actions a:hover,
+.pong-actions button:focus-visible,
+.pong-actions a:focus-visible {
+  color: var(--color-bg);
+  background: var(--color-fg);
+  outline: none;
+}
+
+.pong-notes {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  color: color-mix(in srgb, var(--color-fg) 78%, transparent);
+  line-height: 1.6;
+}
+
+.pong-notes p {
+  max-width: 74ch;
+  margin: 0;
+}
+
+.project-play-link {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-fg);
+  border-radius: 6px;
+  color: var(--color-fg);
+  text-decoration: none;
+}
+
+.project-play-link:hover,
+.project-play-link:focus-visible {
+  color: var(--color-bg);
+  background: var(--color-fg);
+  outline: none;
+}
+
+@media (max-width: 720px) {
+  .pong-play-page {
+    padding-top: 6.5rem;
+  }
+
+  .pong-play-heading h1 {
+    font-size: clamp(2rem, 13vw, 3.5rem);
+  }
+
+  .pong-controls-row {
+    grid-template-columns: 1fr;
+  }
+
+  .pong-actions {
+    display: grid;
+  }
+
+  .pong-actions button,
+  .pong-actions a {
+    width: 100%;
+  }
+}

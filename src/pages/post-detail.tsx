@@ -8,6 +8,7 @@ import {
   type SanityImage,
 } from "../lib/sanityContent";
 import { sanityImageUrl } from "../lib/sanity";
+import "../styles/ai-pong-play.css";
 
 type PostDetailPageProps = {
   section: PostSection;
@@ -95,6 +96,11 @@ export default function PostDetailPage({ section, basePath, backLabel }: PostDet
                   className="w-full"
                   loading="lazy"
                 />
+              )}
+              {section === "projects" && post.slug === "ai-pong-self-play" && (
+                <Link to="/projects/ai-pong-self-play/play" className="project-play-link">
+                  Play against the trained bot
+                </Link>
               )}
               {post.body && post.body.length > 0 && (
                 <div className="post-body-content space-y-4">
