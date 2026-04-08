@@ -101,7 +101,7 @@ body {
 }
 
 .nav-dropdown-container {
-  position: absolute;
+  position: fixed;
   top: 32px; /* Add some spacing from the top */
   left: 32px; /* Add some spacing from the left */
   z-index: 10; /* Ensure it stays above other elements */
