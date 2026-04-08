@@ -60,7 +60,7 @@ export function Welcome() {
         </header>
         <div className="max-w-[400px] w-full space-y-6 px-4 ">
           <nav className="">
-            <ul className="flex flex-row gap-12 justify-center items-center animate-from-bottom">
+            <ul className="welcome-icon-row flex flex-row gap-12 justify-center items-center animate-from-bottom">
               {resources.map(({ href, icon }) => (
                 <li
                   key={href}

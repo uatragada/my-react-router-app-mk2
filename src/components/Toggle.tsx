@@ -52,7 +52,7 @@ function Toggle() {
 
   return (
     <div
-      className="container--toggle w-16 h-16 flex items-center justify-center cursor-pointer"
+      className="dark-mode-toggle w-16 h-16 flex items-center justify-center cursor-pointer"
       title="color mode toggle"
     >
       <input
@@ -72,5 +72,4 @@ function Toggle() {
     </div>
   );
 }
-console.log("Toggle component rendered with theme");
 export default Toggle;

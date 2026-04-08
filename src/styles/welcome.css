@@ -5,3 +5,9 @@
     min-height: 100vh;
     box-sizing: border-box;
 }
+
+.welcome-icon-row {
+    background-color: var(--color-bg);
+    border-radius: 0;
+    padding: 12px 16px;
+}
