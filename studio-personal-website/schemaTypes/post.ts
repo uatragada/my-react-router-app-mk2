@@ -22,6 +22,20 @@ export const post = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: "section",
+      title: "Section",
+      type: "string",
+      options: {
+        list: [
+          { title: "Blog", value: "blog" },
+          { title: "Projects", value: "projects" },
+        ],
+        layout: "radio",
+      },
+      initialValue: "blog",
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
       name: "excerpt",
       title: "Excerpt",
       type: "text",

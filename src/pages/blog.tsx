@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { getBlogPostPreviews, type BlogPostPreview } from "../lib/sanityContent";
+import { getBlogPostPreviews, type PostPreview } from "../lib/sanityContent";
 
 export default function Blog() {
-  const [posts, setPosts] = useState<BlogPostPreview[]>([]);
+  const [posts, setPosts] = useState<PostPreview[]>([]);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
 
   useEffect(() => {
@@ -25,7 +25,7 @@ export default function Blog() {
       <div className="flex-1 flex flex-col items-center gap-8 min-h-64">
         <header className="page-header flex flex-col items-center gap-8">
           <div className="w-[800px] max-w-[300vw] p-4">
-            <h1>Blog</h1>
+            <h1>blog</h1>
           </div>
         </header>
         <section className="blog-content flex flex-col items-center gap-4">
