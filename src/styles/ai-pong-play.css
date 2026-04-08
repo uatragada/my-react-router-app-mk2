@@ -108,6 +108,22 @@
   outline: none;
 }
 
+.pong-actions button[aria-pressed="true"] {
+  color: var(--color-bg);
+  background: var(--color-checked);
+  border-color: var(--color-checked);
+}
+
+.pong-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.pong-actions button:disabled:hover {
+  color: var(--color-fg);
+  background: var(--color-bg);
+}
+
 .pong-notes {
   display: grid;
   gap: 0.35rem;

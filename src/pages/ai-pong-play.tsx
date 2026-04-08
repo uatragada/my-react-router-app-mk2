@@ -3,7 +3,8 @@ import type { PointerEvent } from "react";
 import { useEffect, useRef, useState } from "react";
 import "../styles/ai-pong-play.css";
 
-const MODEL_URL = "/ai-pong/right-agent-policy.json";
+const LEFT_MODEL_URL = "/ai-pong/left-agent-policy.json";
+const RIGHT_MODEL_URL = "/ai-pong/right-agent-policy.json";
 
 type EnvConfig = {
   width: number;
@@ -34,6 +35,7 @@ type BrowserPolicyJson = {
   actionSize: number;
   hiddenSize: number;
   actions: string[];
+  side?: "left" | "right";
   envConfig: EnvConfig;
   layers: {
     backbone0: LayerWeights;
@@ -77,6 +79,8 @@ type HudState = {
   modelStatus: "loading" | "ready" | "error";
   message: string;
 };
+
+type GameMode = "human" | "ai";
 
 const fallbackConfig: EnvConfig = {
   width: 900,
@@ -206,6 +210,20 @@ function reflectFromPaddle(
   state.ballVy = speed * Math.sin(angle);
 }
 
+function getLeftObservation(state: GameState, config: EnvConfig): Float32Array {
+  return Float32Array.from([
+    state.leftY / config.height,
+    state.rightY / config.height,
+    state.ballX / config.width,
+    state.ballY / config.height,
+    state.ballVx / config.max_ball_speed,
+    state.ballVy / config.max_ball_speed,
+    (state.ballY - state.leftY) / config.height,
+    (state.ballY - state.rightY) / config.height,
+    (state.leftScore - state.rightScore) / config.score_to_win,
+  ]);
+}
+
 function getRightObservation(state: GameState, config: EnvConfig): Float32Array {
   return Float32Array.from([
     state.rightY / config.height,
@@ -220,15 +238,21 @@ function getRightObservation(state: GameState, config: EnvConfig): Float32Array 
   ]);
 }
 
-function chooseFallbackBotAction(state: GameState): number {
-  if (Math.abs(state.ballY - state.rightY) < 8) {
+function chooseTrackerAction(ballY: number, paddleY: number): number {
+  if (Math.abs(ballY - paddleY) < 8) {
     return 0;
   }
 
-  return state.ballY < state.rightY ? 1 : 2;
+  return ballY < paddleY ? 1 : 2;
 }
 
-function drawGame(canvas: HTMLCanvasElement, state: GameState, config: EnvConfig, message: string) {
+function drawGame(
+  canvas: HTMLCanvasElement,
+  state: GameState,
+  config: EnvConfig,
+  message: string,
+  mode: GameMode
+) {
   const context = canvas.getContext("2d");
 
   if (!context) {
@@ -280,8 +304,18 @@ function drawGame(canvas: HTMLCanvasElement, state: GameState, config: EnvConfig
   context.fillStyle = "#a8b0be";
   context.font = "17px Consolas, monospace";
   context.textAlign = "left";
-  context.fillText("you vs trained PPO bot", 20, config.height - 44);
-  context.fillText(`hits you:${state.leftHits} bot:${state.rightHits} rally:${state.rallyHits}`, 20, config.height - 22);
+  context.fillText(
+    mode === "ai" ? "left PPO bot vs right PPO bot" : "you vs trained PPO bot",
+    20,
+    config.height - 44
+  );
+  context.fillText(
+    mode === "ai"
+      ? `hits left:${state.leftHits} right:${state.rightHits} rally:${state.rallyHits}`
+      : `hits you:${state.leftHits} bot:${state.rightHits} rally:${state.rallyHits}`,
+    20,
+    config.height - 22
+  );
 
   if (message) {
     context.fillStyle = "rgba(16, 18, 24, 0.72)";
@@ -295,9 +329,11 @@ function drawGame(canvas: HTMLCanvasElement, state: GameState, config: EnvConfig
 
 export default function AIPongPlay() {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  const policyRef = useRef<BrowserPolicy | null>(null);
+  const leftPolicyRef = useRef<BrowserPolicy | null>(null);
+  const rightPolicyRef = useRef<BrowserPolicy | null>(null);
   const configRef = useRef<EnvConfig>(fallbackConfig);
   const stateRef = useRef<GameState>(createInitialState(fallbackConfig));
+  const aiModeRef = useRef(false);
   const keysRef = useRef({ up: false, down: false });
   const pointerActiveRef = useRef(false);
   const pointerTargetRef = useRef<number | null>(null);
@@ -314,34 +350,39 @@ export default function AIPongPlay() {
     message: "Loading trained bot...",
   });
   const [modelMeta, setModelMeta] = useState<BrowserPolicyJson | null>(null);
+  const [aiMode, setAiMode] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
 
-    fetch(MODEL_URL)
-      .then((response) => {
+    const loadPolicy = (url: string) =>
+      fetch(url).then((response) => {
         if (!response.ok) {
-          throw new Error(`Failed to load model: ${response.status}`);
+          throw new Error(`Failed to load model ${url}: ${response.status}`);
         }
 
         return response.json() as Promise<BrowserPolicyJson>;
-      })
-      .then((model) => {
+      });
+
+    Promise.all([loadPolicy(LEFT_MODEL_URL), loadPolicy(RIGHT_MODEL_URL)])
+      .then(([leftModel, rightModel]) => {
         if (cancelled) {
           return;
         }
 
-        const policy = compilePolicy(model);
-        policyRef.current = policy;
-        configRef.current = model.envConfig;
-        stateRef.current = createInitialState(model.envConfig);
+        const leftPolicy = compilePolicy(leftModel);
+        const rightPolicy = compilePolicy(rightModel);
+        leftPolicyRef.current = leftPolicy;
+        rightPolicyRef.current = rightPolicy;
+        configRef.current = rightModel.envConfig;
+        stateRef.current = createInitialState(rightModel.envConfig);
         if (canvasRef.current) {
-          canvasRef.current.width = model.envConfig.width;
-          canvasRef.current.height = model.envConfig.height;
+          canvasRef.current.width = rightModel.envConfig.width;
+          canvasRef.current.height = rightModel.envConfig.height;
         }
-        messageRef.current = `Loaded checkpoint update ${model.checkpointUpdate}`;
+        messageRef.current = `Loaded left and right checkpoint update ${rightModel.checkpointUpdate}`;
         messageUntilRef.current = performance.now() + 2200;
-        setModelMeta(model);
+        setModelMeta(rightModel);
         setHud((previous) => ({
           ...previous,
           leftScore: 0,
@@ -422,9 +463,14 @@ export default function AIPongPlay() {
       while (accumulator >= config.dt) {
         const pointerTarget = pointerTargetRef.current;
         const keyPressed = keysRef.current.up !== keysRef.current.down;
+        const leftPolicy = leftPolicyRef.current;
+        const rightPolicy = rightPolicyRef.current;
+        const isAiMode = aiModeRef.current && leftPolicy !== null && rightPolicy !== null;
         let leftAction = 0;
 
-        if (keyPressed) {
+        if (isAiMode) {
+          leftAction = choosePolicyAction(leftPolicy, getLeftObservation(state, config));
+        } else if (keyPressed) {
           leftAction = keysRef.current.up ? 1 : 2;
         } else if (pointerActiveRef.current && pointerTarget !== null) {
           if (Math.abs(pointerTarget - state.leftY) > 8) {
@@ -432,10 +478,9 @@ export default function AIPongPlay() {
           }
         }
 
-        const policy = policyRef.current;
-        const rightAction = policy
-          ? choosePolicyAction(policy, getRightObservation(state, config))
-          : chooseFallbackBotAction(state);
+        const rightAction = rightPolicy
+          ? choosePolicyAction(rightPolicy, getRightObservation(state, config))
+          : chooseTrackerAction(state.ballY, state.rightY);
 
         state.leftY = movePaddle(state.leftY, leftAction, config);
         state.rightY = movePaddle(state.rightY, rightAction, config);
@@ -478,19 +523,25 @@ export default function AIPongPlay() {
 
         if (state.ballX < -config.ball_radius) {
           state.rightScore += 1;
-          messageRef.current = "Bot scored";
+          messageRef.current = isAiMode ? "Right AI scored" : "Bot scored";
           messageUntilRef.current = time + 900;
           serveBall(state, config, -1);
         } else if (state.ballX > config.width + config.ball_radius) {
           state.leftScore += 1;
-          messageRef.current = "You scored";
+          messageRef.current = isAiMode ? "Left AI scored" : "You scored";
           messageUntilRef.current = time + 900;
           serveBall(state, config, 1);
         }
 
         if (state.leftScore >= config.score_to_win || state.rightScore >= config.score_to_win) {
-          const userWon = state.leftScore > state.rightScore;
-          messageRef.current = userWon ? "You won the match. Resetting." : "Bot won the match. Resetting.";
+          const leftWon = state.leftScore > state.rightScore;
+          messageRef.current = isAiMode
+            ? leftWon
+              ? "Left AI won the match. Resetting."
+              : "Right AI won the match. Resetting."
+            : leftWon
+              ? "You won the match. Resetting."
+              : "Bot won the match. Resetting.";
           messageUntilRef.current = time + 1800;
           state.leftScore = 0;
           state.rightScore = 0;
@@ -504,7 +555,7 @@ export default function AIPongPlay() {
 
       const message = time < messageUntilRef.current ? messageRef.current : "";
       if (canvas) {
-        drawGame(canvas, state, config, message);
+        drawGame(canvas, state, config, message, aiModeRef.current ? "ai" : "human");
       }
 
       if (time - lastHudUpdate > 250) {
@@ -573,8 +624,39 @@ export default function AIPongPlay() {
   const resetMatch = () => {
     const config = configRef.current;
     stateRef.current = createInitialState(config);
-    messageRef.current = "Reset match";
+    messageRef.current = aiModeRef.current ? "Reset AI match" : "Reset match";
     messageUntilRef.current = performance.now() + 900;
+  };
+
+  const toggleAiMode = () => {
+    if (!leftPolicyRef.current || !rightPolicyRef.current) {
+      messageRef.current = "AI mode needs both trained models loaded.";
+      messageUntilRef.current = performance.now() + 1400;
+      setHud((previous) => ({
+        ...previous,
+        message: messageRef.current,
+      }));
+      return;
+    }
+
+    const nextMode = !aiModeRef.current;
+    aiModeRef.current = nextMode;
+    pointerActiveRef.current = false;
+    pointerTargetRef.current = null;
+    keysRef.current = { up: false, down: false };
+    stateRef.current = createInitialState(configRef.current);
+    messageRef.current = nextMode ? "AI mode: left model vs right model" : "Player mode: you vs right model";
+    messageUntilRef.current = performance.now() + 1600;
+    setAiMode(nextMode);
+    setHud((previous) => ({
+      ...previous,
+      leftScore: 0,
+      rightScore: 0,
+      leftHits: 0,
+      rightHits: 0,
+      rallyHits: 0,
+      message: messageRef.current,
+    }));
   };
 
   return (
@@ -586,8 +668,8 @@ export default function AIPongPlay() {
           </Link>
           <h1>Play the trained Pong bot</h1>
           <p>
-            Your browser downloads the exported PPO policy, runs the neural network locally, and
-            uses it to control the right paddle.
+            Your browser downloads the exported PPO policies, runs the neural networks locally,
+            and uses them to control the checkpoint agents.
           </p>
         </div>
 
@@ -610,11 +692,11 @@ export default function AIPongPlay() {
         <div className="pong-controls-row" aria-live="polite">
           <div>
             <p className="pong-label">Status</p>
-            <p>{hud.modelStatus === "ready" ? `Model loaded: update ${modelMeta?.checkpointUpdate}` : hud.message}</p>
+            <p>{hud.modelStatus === "ready" ? `Models loaded: update ${modelMeta?.checkpointUpdate}` : hud.message}</p>
           </div>
           <div>
             <p className="pong-label">Score</p>
-            <p>You {hud.leftScore} : {hud.rightScore} Bot</p>
+            <p>{aiMode ? "Left AI" : "You"} {hud.leftScore} : {hud.rightScore} {aiMode ? "Right AI" : "Bot"}</p>
           </div>
           <div>
             <p className="pong-label">Rally</p>
@@ -626,16 +708,28 @@ export default function AIPongPlay() {
           <button type="button" onClick={resetMatch}>
             Reset match
           </button>
-          <a href={MODEL_URL} download="ai-pong-right-agent-policy.json">
+          <button
+            type="button"
+            onClick={toggleAiMode}
+            aria-pressed={aiMode}
+            disabled={hud.modelStatus !== "ready"}
+          >
+            {aiMode ? "Player mode" : "AI mode"}
+          </button>
+          <a href={RIGHT_MODEL_URL} download="ai-pong-right-agent-policy.json">
             Download browser model
           </a>
         </div>
 
         <div className="pong-notes">
-          <p>Controls: move with W/S, arrow keys, or drag with mouse or touch. Press Space to re-serve.</p>
           <p>
-            The downloadable model is a JSON export of the trained right-side ActorCritic policy:
-            9 inputs, two 128-unit tanh layers, and 3 action logits.
+            Controls: move with W/S, arrow keys, or drag with mouse or touch. Press Space to
+            re-serve. AI mode runs the two trained checkpoint policies against each other.
+          </p>
+          <p>
+            The downloadable model is a JSON export of the trained right-side ActorCritic policy.
+            AI mode also loads the left-side policy in the browser: 9 inputs, two 128-unit tanh
+            layers, and 3 action logits for each agent.
           </p>
         </div>
       </section>
