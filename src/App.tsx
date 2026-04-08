@@ -10,6 +10,7 @@ import DarkModeToggle from "./components/Toggle";
 import "../public/enter-animation.css";
 import { useEffect } from "react";
 function App() {
+  const location = useLocation();
 
   useEffect(() => {
     // Add the "loaded" class to <html> and <body> after the page loads

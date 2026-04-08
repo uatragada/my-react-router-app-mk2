@@ -1,12 +1,10 @@
 import nameLogo from "../assets/name-logo.svg";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef } from "react";
 import DarkModeToggle from "../components/Toggle";
-import NavDropdown from "../components/Nav-Dropdown";
 import "../styles/welcome.css";
 
 export function Welcome() {
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const [className, setClassName] = useState<string>("theme-dark");
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (!containerRef.current) return;
