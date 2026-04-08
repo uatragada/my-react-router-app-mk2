@@ -1,10 +1,40 @@
-import React, { useEffect, useState } from "react";
 import "../styles/nav-dropdown.css";
+import { useEffect, useState } from "react";
 
 function NavDropdown() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
+
+  useEffect(() => {
+    if (!isClosing) return;
+
+    const timeout = window.setTimeout(() => {
+      setIsClosing(false);
+    }, 850);
+
+    return () => window.clearTimeout(timeout);
+  }, [isClosing]);
+
+  const handleToggle = () => {
+    if (isOpen) {
+      setIsOpen(false);
+      setIsClosing(true);
+      return;
+    }
+
+    setIsClosing(false);
+    setIsOpen(true);
+  };
+
   return (
-    <div className="dropdown" title="dropdown navigation">
-      <input type="checkbox" id="dropdown-toggle" className="dropdown-toggle" />
+    <div className={`dropdown${isClosing ? " is-closing" : ""}`} title="dropdown navigation">
+      <input
+        type="checkbox"
+        id="dropdown-toggle"
+        className="dropdown-toggle"
+        checked={isOpen}
+        onChange={handleToggle}
+      />
       <div className="dropdown-square"></div>
       <div className="dropdown-content">
         <ul className="dropdown-list">
