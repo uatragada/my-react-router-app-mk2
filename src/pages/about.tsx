@@ -13,19 +13,19 @@ export default function About() {
         <section className="about-content flex flex-col items-center gap-4">
           <div className="about-text w-[800px] max-w-[300vw] p-4">
             <p>
-              I am a Computer Science graduate from the <i>University of Pittsburgh</i> with a passion for solving problems. I have a strong foundation in programming languages such as Python, Java, and C. 
+              I’m a Computer Science graduate from the University of Pittsburgh. I like solving problems and building things that actually work.
             </p>
             <br/>
             <p>
-              The goal of this website is to share my personal projects and just play around with web development. Like a sandbox.
+              I usually approach problems by breaking them down and figuring out what’s actually going on under the hood. From there it’s just designing something better. I solve problems using web technologies, data analysis, and process development, depending on what the situation calls for.
             </p>
             <br/>
             <p>
-              Currently the site is a work in progress and there are plenty of features I have yet to implement. It is using React, Tailwind CSS and Vite for the frontend. Have not yet decided on the backend, but it is coming soon as I develop a blog for myself.
+              Outside of programming, I like hobbies that let me experiment in a different way. I play video games, take photos, and cook; games let me pick apart systems, photography gets me paying attention to composition, and cooking is a hands-on way to make something real.
             </p>
             <br/>
-            <p className = "italic">
-              Stay tuned...
+            <p>
+              This site is where I publish my work. It’s a mix of projects, experiments, and things I’m currently building. Some stuff is polished, some isn’t—but everything here is something I’ve actually spent time thinking through and working on.
             </p>
           </div>
         </section>

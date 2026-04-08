@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { getProjectPostPreviews, type PostPreview } from "../lib/sanityContent";
 
 export default function Projects() {
@@ -29,23 +30,29 @@ export default function Projects() {
           </div>
         </header>
         <section className="projects-content flex flex-col items-center gap-4">
-          {status === "loading" && <p>Loading projects...</p>}
-          {status === "error" && <p>Projects are unavailable right now.</p>}
-          {status === "ready" && posts.length === 0 && <p>Projects coming soon.</p>}
+          {status === "loading" && <p className="post-status-panel w-[800px] max-w-[90vw]">Loading projects...</p>}
+          {status === "error" && <p className="post-status-panel w-[800px] max-w-[90vw]">Projects are unavailable right now.</p>}
+          {status === "ready" && posts.length === 0 && <p className="post-status-panel w-[800px] max-w-[90vw]">Projects coming soon.</p>}
           {posts.map((post) => (
-            <article key={post._id} className="w-[800px] max-w-[90vw] p-4">
-              <h2>{post.title}</h2>
-              {post.publishedAt && (
-                <time dateTime={post.publishedAt}>
-                  {new Date(post.publishedAt).toLocaleDateString(undefined, {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-              )}
-              {post.excerpt && <p>{post.excerpt}</p>}
-            </article>
+            <Link key={post._id} to={`/projects/${post.slug}`} className="post-preview-link w-[800px] max-w-[90vw] block">
+              <article className="post-preview">
+                <header className="post-preview-title-section">
+                  <h2>{post.title}</h2>
+                </header>
+                <div className="post-preview-body-section">
+                  {post.publishedAt && (
+                    <time dateTime={post.publishedAt}>
+                      {new Date(post.publishedAt).toLocaleDateString(undefined, {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </time>
+                  )}
+                  {post.excerpt && <p className="italic">{post.excerpt}</p>}
+                </div>
+              </article>
+            </Link>
           ))}
         </section>
       </div>

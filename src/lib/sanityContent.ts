@@ -1,7 +1,9 @@
 import { sanityClient, sanityImageUrl } from "./sanity";
+import type { PortableTextBlock } from "@portabletext/react";
 
-type SanityImage = Parameters<typeof sanityImageUrl>[0];
+export type SanityImage = Parameters<typeof sanityImageUrl>[0];
 export type PostSection = "blog" | "projects";
+export type PostBody = (PortableTextBlock | (SanityImage & { _type: "image"; alt?: string }))[];
 
 export type Photo = {
   _id: string;
@@ -25,6 +27,10 @@ export type PostPreview = {
   coverImageAlt?: string;
 };
 export type BlogPostPreview = PostPreview;
+
+export type PostDetail = PostPreview & {
+  body?: PostBody;
+};
 
 const photoQuery = `*[_type == "photo"] | order(coalesce(sortOrder, 9999) asc, _createdAt desc) {
   _id,
@@ -50,12 +56,39 @@ const postPreviewBySectionQuery = `*[_type == "post" && defined(slug.current) &&
   "coverImageAlt": coverImage.alt
 }`;
 
+const postBySectionAndSlugQuery = `*[_type == "post" && slug.current == $slug && (
+  section == $section || ($section == "blog" && !defined(section))
+)][0] {
+  _id,
+  title,
+  "slug": slug.current,
+  section,
+  excerpt,
+  publishedAt,
+  coverImage,
+  "coverImageAlt": coverImage.alt,
+  body[] {
+    ...,
+    _type == "image" => {
+      ...,
+      "alt": alt
+    }
+  }
+}`;
+
 export async function getPhotos(): Promise<Photo[]> {
   return sanityClient.fetch<Photo[]>(photoQuery);
 }
 
 export async function getPostPreviewsBySection(section: PostSection): Promise<PostPreview[]> {
   return sanityClient.fetch<PostPreview[]>(postPreviewBySectionQuery, { section });
+}
+
+export async function getPostBySectionAndSlug(
+  section: PostSection,
+  slug: string
+): Promise<PostDetail | null> {
+  return sanityClient.fetch<PostDetail | null>(postBySectionAndSlugQuery, { section, slug });
 }
 
 export async function getBlogPostPreviews(): Promise<PostPreview[]> {
