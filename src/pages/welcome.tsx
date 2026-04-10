@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import type { CSSProperties } from "react";
 import { Link } from "react-router-dom";
 import worldMap from "../assets/BlankMap-World.svg";
+import { getThemeById, readStoredPortfolioThemeId } from "../lib/themeRegistry";
 import "../styles/welcome.css";
 
 type WeatherStatus = "loading" | "ready" | "error";
@@ -850,6 +851,8 @@ export function Welcome() {
   const weather = useWeatherTelemetry();
   const github = useGithubTelemetry();
   const siteStatus = useSiteStatus();
+  const [activeThemeId] = useState(() => readStoredPortfolioThemeId());
+  const activeTheme = useMemo(() => getThemeById(activeThemeId), [activeThemeId]);
   const [activeOperationsIndex, setActiveOperationsIndex] = useState(0);
   const stationMapStyle = useMemo(() => getStationMapStyle(), []);
   const operationsCards = useMemo(
@@ -1201,7 +1204,18 @@ export function Welcome() {
 
         <footer className="console-footer">
           <span>WX SOURCE / OPEN-METEO</span>
-          <span>NO TRACKING PROMPT / FIXED STATION READOUT</span>
+          <Link className="console-theme-strip-link" to="/theme" aria-label={`Change theme. Current theme ${activeTheme.name}`}>
+            <span className="console-theme-strip" aria-hidden="true">
+              {activeTheme.colors.map((color) => (
+                <span
+                  key={`${activeTheme.id}-${color.label}`}
+                  className="console-theme-strip-slice"
+                  style={{ backgroundColor: color.value }}
+                />
+              ))}
+            </span>
+            <span>{activeTheme.code} / {activeTheme.name}</span>
+          </Link>
           <span>STATUS / NOMINAL</span>
         </footer>
       </div>

@@ -1,19 +1,19 @@
 .welcome-console {
-  --console-bg: #020202;
-  --console-fg: #ffffff;
-  --console-muted: #3F4F44;
-  --console-dim: rgb(244 241 234 / 36%);
-  --console-line: rgb(244 241 234 / 78%);
-  --console-line-soft: rgb(244 241 234 / 22%);
-  --console-accent: var(--console-fg);
-  --console-emphasis: var(--console-fg);
+  --console-bg: var(--site-bg, #020202);
+  --console-fg: var(--site-fg, #ffffff);
+  --console-muted: var(--site-muted, #3F4F44);
+  --console-dim: var(--site-dim, rgb(244 241 234 / 36%));
+  --console-line: var(--site-line, rgb(244 241 234 / 78%));
+  --console-line-soft: var(--site-line-soft, rgb(244 241 234 / 22%));
+  --console-accent: var(--site-accent, var(--console-fg));
+  --console-emphasis: var(--site-emphasis, var(--console-fg));
   position: relative;
   width: 100%;
   min-height: 100svh;
   overflow-x: hidden;
   background:
     radial-gradient(circle at 52% 46%, rgb(255 255 255 / 4%), transparent 32rem),
-    linear-gradient(180deg, #050505 0%, var(--console-bg) 100%);
+    linear-gradient(180deg, var(--site-panel, #050505) 0%, var(--console-bg) 100%);
   color: var(--console-fg);
   font-family:
     var(--font-ioskeley-mono),
@@ -72,6 +72,37 @@
   font-weight: 800;
   text-decoration: none;
   letter-spacing: 0.18em;
+}
+
+.console-theme-strip-link {
+  display: grid;
+  grid-template-columns: minmax(96px, 144px) auto;
+  align-items: center;
+  justify-self: center;
+  gap: 10px;
+  min-width: 0;
+  color: var(--console-muted);
+  text-align: center;
+  text-decoration: none;
+}
+
+.console-theme-strip-link:focus-visible {
+  outline: 1px solid var(--console-accent);
+  outline-offset: 4px;
+}
+
+.console-theme-strip {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+  height: 8px;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--console-line-soft);
+  background: #000000;
+}
+
+.console-theme-strip-slice {
+  min-width: 0;
 }
 
 .console-topbar-center {
@@ -390,15 +421,15 @@
 }
 
 .project-status-live {
-  color: #4dff88;
+  color: var(--site-live, #4dff88);
 }
 
 .project-status-stdby {
-  color: #ffd35a;
+  color: var(--site-warn, #ffd35a);
 }
 
 .project-status-lab {
-  color: #65aaff;
+  color: var(--site-data, #65aaff);
 }
 
 .selector-bracket {
@@ -694,15 +725,15 @@
 }
 
 .project-channel > .project-status-live {
-  color: #4dff88;
+  color: var(--site-live, #4dff88);
 }
 
 .project-channel > .project-status-stdby {
-  color: #ffd35a;
+  color: var(--site-warn, #ffd35a);
 }
 
 .project-channel > .project-status-lab {
-  color: #65aaff;
+  color: var(--site-data, #65aaff);
 }
 
 .signal-field {
@@ -743,19 +774,19 @@
 }
 
 .signal-nominal {
-  color: #28ff66;
+  color: var(--site-live, #28ff66);
 }
 
 .signal-active {
-  color: #f4f1ea;
+  color: var(--site-fg, #f4f1ea);
 }
 
 .signal-acquiring {
-  color: #ffba2e;
+  color: var(--site-warn, #ffba2e);
 }
 
 .signal-degraded {
-  color: #ff3b30;
+  color: var(--site-fault, #ff3b30);
 }
 
 .signal-quiet {
@@ -764,7 +795,7 @@
 }
 
 .signal-blue {
-  color: #2aa8ff;
+  color: var(--site-data, #2aa8ff);
 }
 
 .signal-pulse::after {

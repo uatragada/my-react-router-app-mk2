@@ -7,9 +7,11 @@ import PostDetailPage from "./pages/post-detail";
 import AIPongPlay from "./pages/ai-pong-play";
 import Photography from "./pages/photography"; // adjust if your path is different
 import Contact from "./pages/contact"; // adjust if your path is different
+import ThemePrototypes from "./pages/theme-prototypes";
 import NavDropdown from "./components/Nav-Dropdown";
 import "./styles/enter-animation.css";
 import { useEffect } from "react";
+import { applyStoredPortfolioTheme } from "./lib/themeRegistry";
 function App() {
   const location = useLocation();
   const isHome = location.pathname === "/";
@@ -18,6 +20,7 @@ function App() {
     document.documentElement.classList.add("dark");
     document.documentElement.classList.remove("light");
     localStorage.setItem("theme", "dark");
+    applyStoredPortfolioTheme();
 
     // Add the "loaded" class to <html> and <body> after the page loads
     const handleLoad = () => {
@@ -56,6 +59,8 @@ function App() {
         <Route path="/blog/:slug" element={<PostDetailPage section="blog" basePath="/blog" backLabel="blog" />} />
         <Route path="/photography" element={<Photography />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/theme" element={<ThemePrototypes />} />
+        <Route path="/theme-prototypes" element={<ThemePrototypes />} />
       </Routes>
     </div>
   );
