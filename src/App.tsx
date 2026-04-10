@@ -8,13 +8,17 @@ import AIPongPlay from "./pages/ai-pong-play";
 import Photography from "./pages/photography"; // adjust if your path is different
 import Contact from "./pages/contact"; // adjust if your path is different
 import NavDropdown from "./components/Nav-Dropdown";
-import DarkModeToggle from "./components/Toggle";
-import "../public/enter-animation.css";
+import "./styles/enter-animation.css";
 import { useEffect } from "react";
 function App() {
   const location = useLocation();
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
+    document.documentElement.classList.add("dark");
+    document.documentElement.classList.remove("light");
+    localStorage.setItem("theme", "dark");
+
     // Add the "loaded" class to <html> and <body> after the page loads
     const handleLoad = () => {
       document.documentElement.classList.add("loaded");
@@ -37,12 +41,9 @@ function App() {
   }, []);
   return (
     <div>
-      <div className="nav-dropdown-container animate-from-left">
-        <NavDropdown />
-      </div>
-      {location.pathname !== "/" && (
-        <div className="dark-mode-toggle-container animate-from-bottom">
-          <DarkModeToggle />
+      {!isHome && (
+        <div className="nav-dropdown-container animate-from-left">
+          <NavDropdown />
         </div>
       )}
       <Routes>
