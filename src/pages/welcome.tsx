@@ -105,7 +105,7 @@ type SignalTileStyle = CSSProperties & {
 };
 
 const station = {
-  label: "SCARBOROUGH_STATION",
+  label: "SCARBOROUGH_ME",
   latitude: "43.5901",
   longitude: "-70.3345",
   timeZone: "America/New_York",
