@@ -378,7 +378,7 @@ export function Welcome() {
             </div>
             <div className="identity-meta">
               <ReadoutRow label="Role" value="Software Engineer" />
-              <ReadoutRow label="Focus" value="Systems + Interfaces" />
+              <ReadoutRow label="Focus" value="Systems + Optimization" />
               <ReadoutRow label="Mode" value={import.meta.env.MODE.toUpperCase()} accent />
             </div>
           </section>
