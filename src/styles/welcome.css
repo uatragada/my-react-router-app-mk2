@@ -1060,41 +1060,206 @@
   }
 }
 
-@media (max-width: 440px) {
-  .console-cell {
-    padding: 8px;
+@media (max-width: 640px) {
+  .welcome-console {
+    height: auto;
+    min-height: 100svh;
+    overflow: auto;
   }
 
-  .identity-cell h1 {
-    font-size: 50px;
+  .console-frame {
+    height: auto;
+    min-height: 100svh;
+    overflow: visible;
+  }
+
+  .console-topbar,
+  .console-footer {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 8px 10px;
+  }
+
+  .console-footer {
+    margin-top: 0;
+  }
+
+  .console-footer span:nth-child(2),
+  .console-footer span:nth-child(3),
+  .console-topbar-center {
+    justify-self: start;
+    text-align: left;
+  }
+
+  .console-theme-strip-link {
+    grid-template-columns: minmax(96px, 120px) auto;
+    justify-self: start;
+    text-align: left;
   }
 
   .console-grid {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+    flex: initial;
+    height: auto;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "identity"
+      "mission"
+      "mode"
+      "focus"
+      "telemetry"
+      "projects"
+      "contact"
+      "reserved";
   }
 
-  .cell-heading::after {
-    margin-left: 10px;
+  .console-cell {
+    min-height: auto;
+    overflow: visible;
+    border-right: 0;
+    padding: 10px;
+  }
+
+  .identity-cell {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .identity-kicker {
+    font-size: 11px;
+  }
+
+  .identity-mark {
+    justify-content: flex-start;
+  }
+
+  .identity-cell h1 {
+    font-size: clamp(48px, 18vw, 72px);
+  }
+
+  .identity-meta {
+    gap: 6px;
+  }
+
+  .info-cell p {
+    max-width: none;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .capability-list {
+    gap: 8px;
+  }
+
+  .capability-channel {
+    grid-template-columns: 30px 1fr;
+    gap: 3px 8px;
+    padding-bottom: 6px;
+    font-size: 8px;
+  }
+
+  .capability-code {
+    grid-row: 1;
+  }
+
+  .capability-title {
+    font-size: 11px;
+  }
+
+  .capability-detail {
+    display: none;
+  }
+
+  .operations-card {
+    grid-template-rows: auto auto auto auto;
+    overflow: visible;
+  }
+
+  .operations-readouts {
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .operations-readouts .readout-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .operations-readouts .readout-label,
+  .operations-readouts .readout-value {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+  }
+
+  .operations-readouts .readout-leader {
+    display: none;
+  }
+
+  .info-cell .operations-status {
+    min-height: 0;
+  }
+
+  .telemetry-stack {
+    gap: 6px;
+  }
+
+  .telemetry-map {
+    flex: initial;
+    aspect-ratio: 16 / 9;
+    min-height: 180px;
+  }
+
+  .channel-link {
+    min-height: 0;
+    padding: 8px 0;
+  }
+
+  .channel-copy span:first-child,
+  .project-channel div span:first-child,
+  .external-link {
+    font-size: 12px;
+  }
+
+  .channel-copy span:last-child,
+  .project-channel div span:last-child {
+    font-size: 9px;
+  }
+
+  .project-channel {
+    padding: 9px 0;
+  }
+
+  .signal-field {
+    flex: initial;
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    min-height: 144px;
+  }
+
+  .reserved-bay {
+    min-height: 120px;
   }
 
   .readout-row {
     grid-template-columns: 1fr auto;
   }
 
-  .operations-readouts {
-    grid-template-columns: 1fr;
+  .readout-leader {
+    display: none;
+  }
+}
+
+@media (max-width: 440px) {
+  .console-cell {
+    padding: 8px;
   }
 
-  .operations-readouts .readout-row {
-    display: grid;
-    grid-template-columns: 1fr auto;
+  .cell-heading::after {
+    margin-left: 10px;
   }
 
   .signal-field {
-    min-height: 68px;
-  }
-
-  .readout-leader {
-    display: none;
+    min-height: 120px;
   }
 }
