@@ -11,6 +11,7 @@ import ThemePrototypes from "./pages/theme-prototypes";
 import "./styles/enter-animation.css";
 import { useEffect } from "react";
 import { applyStoredPortfolioTheme } from "./lib/themeRegistry";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 function App() {
   useEffect(() => {
@@ -35,6 +36,7 @@ function App() {
         <Route path="/theme" element={<ThemePrototypes />} />
         <Route path="/theme-prototypes" element={<ThemePrototypes />} />
       </Routes>
+      <SpeedInsights />
     </div>
   );
 }
