@@ -1,0 +1,510 @@
+@import "./system-chrome.css";
+
+.info-console-grid {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: var(--system-shell-columns);
+  grid-template-rows: var(--system-shell-rows);
+  gap: var(--system-shell-gap);
+  padding: var(--system-shell-gap);
+  background: var(--site-line, rgb(255 255 255 / 78%));
+  overflow: hidden;
+}
+
+.info-console-grid > * {
+  min-width: 0;
+  min-height: 0;
+  background: var(--site-panel, #050505);
+}
+
+.info-console-identity,
+.info-console-brief,
+.info-console-status,
+.info-console-navwrap,
+.info-console-main,
+.info-console-side {
+  padding: var(--system-panel-pad);
+}
+
+.info-console-identity {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  grid-template-rows: auto auto auto 1fr;
+  gap: 12px;
+}
+
+.info-console-brief {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+}
+
+.info-console-status {
+  grid-column: 3;
+  grid-row: 1;
+  display: grid;
+  align-content: start;
+  gap: 10px;
+}
+
+.info-console-navwrap {
+  grid-column: 1;
+  grid-row: 2;
+  display: grid;
+  grid-template-rows: var(--system-shell-side-rows);
+  gap: var(--system-shell-gap);
+  padding: 0;
+  background: var(--site-line, rgb(255 255 255 / 78%));
+}
+
+.info-console-main {
+  grid-column: 2;
+  grid-row: 2;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.info-console-side {
+  grid-column: 3;
+  grid-row: 2;
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.info-console-form-section,
+.info-console-form {
+  display: grid;
+  gap: 14px;
+}
+
+.info-console-navwrap .system-uplink,
+.info-console-supplemental {
+  padding: var(--system-panel-pad);
+  background: var(--site-panel, #050505);
+}
+
+.info-console-kicker {
+  display: grid;
+  gap: 4px;
+  font-size: 11px;
+  line-height: 1.1;
+  color: var(--site-muted, #8b8b8b);
+}
+
+.info-console-title {
+  display: grid;
+  gap: 4px;
+  font-size: clamp(2rem, 4vw, 4.4rem);
+  line-height: 0.9;
+  letter-spacing: 0.05em;
+  color: var(--site-emphasis, #fff);
+}
+
+.info-console-summary,
+.info-console-brief-copy,
+.info-console-copy p,
+.info-console-note {
+  margin: 0;
+  color: var(--site-dim, rgb(255 255 255 / 36%));
+}
+
+.info-console-summary {
+  max-width: 34ch;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.info-console-brief-copy {
+  max-width: 56ch;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--site-emphasis, #fff);
+}
+
+.info-console-readouts,
+.info-console-stat-list,
+.info-console-supplemental-list {
+  align-self: end;
+  display: grid;
+  gap: 10px;
+  font-size: 10px;
+  line-height: 1.25;
+}
+
+.info-console-readouts div,
+.info-console-stat-row,
+.info-console-supplemental-list div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+}
+
+.info-console-readouts span:first-child,
+.info-console-stat-row span:first-child,
+.info-console-supplemental-list span:first-child {
+  color: var(--site-muted, #8b8b8b);
+}
+
+.info-console-readouts span:last-child,
+.info-console-stat-row span:last-child,
+.info-console-supplemental-list span:last-child {
+  color: var(--site-emphasis, #fff);
+  text-align: right;
+}
+
+.info-console-panel-heading {
+  font-size: 10px;
+  line-height: 1.1;
+  color: var(--site-muted, #8b8b8b);
+}
+
+.info-console-copy {
+  display: grid;
+  gap: 14px;
+}
+
+.info-console-copy p,
+.info-console-note,
+.info-console-list,
+.info-console-link-list,
+.info-console-form-intro,
+.info-console-form-note {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.info-console-list,
+.info-console-link-list {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.info-console-form-intro,
+.info-console-form-note {
+  margin: 0;
+  color: var(--site-dim, rgb(255 255 255 / 36%));
+}
+
+.info-console-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.info-console-field {
+  display: grid;
+  gap: 7px;
+}
+
+.info-console-field span {
+  font-size: 10px;
+  line-height: 1.1;
+  color: var(--site-muted, #8b8b8b);
+}
+
+.info-console-field-full {
+  grid-column: 1 / -1;
+}
+
+.info-console-input {
+  width: 100%;
+  border: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+  background: color-mix(in srgb, var(--site-panel, #050505) 92%, var(--site-line, #fff) 8%);
+  color: var(--site-emphasis, #fff);
+  padding: 12px 11px;
+  font: inherit;
+  text-transform: uppercase;
+  outline: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.info-console-input::placeholder {
+  color: var(--site-dim, rgb(255 255 255 / 36%));
+}
+
+.info-console-input:focus {
+  border-color: var(--site-line, rgb(255 255 255 / 78%));
+}
+
+.info-console-textarea {
+  min-height: 160px;
+  resize: vertical;
+}
+
+.info-console-form-actions {
+  display: grid;
+  gap: 10px;
+  align-items: start;
+}
+
+.info-console-button {
+  width: fit-content;
+  min-width: 184px;
+  border: 1px solid var(--site-line, rgb(255 255 255 / 78%));
+  background: transparent;
+  color: var(--site-emphasis, #fff);
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+
+.info-console-button:disabled {
+  opacity: 0.66;
+  cursor: wait;
+}
+
+.info-console-button:hover,
+.info-console-button:focus-visible {
+  background: color-mix(in srgb, var(--site-line, #fff) 14%, transparent);
+}
+
+.info-console-form-note-success {
+  color: var(--site-status-live, var(--site-emphasis, #fff));
+}
+
+.info-console-form-note-error {
+  color: var(--site-status-fault, var(--site-emphasis, #fff));
+}
+
+.info-console-list li,
+.info-console-link-item {
+  border-top: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+  padding-top: 10px;
+}
+
+.info-console-list strong,
+.info-console-link-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--site-emphasis, #fff);
+  font-size: 12px;
+}
+
+.info-console-link-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.info-console-link-item span:last-child {
+  align-self: start;
+  color: var(--site-muted, #8b8b8b);
+  font-size: 10px;
+}
+
+@media (max-width: 1180px) {
+  .info-console-grid {
+    grid-template-columns: var(--system-shell-tablet-columns);
+    grid-template-rows: auto auto minmax(0, 1fr);
+  }
+
+  .info-console-identity {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .info-console-status {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .info-console-brief {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+
+  .info-console-navwrap {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .info-console-main {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .info-console-side {
+    grid-column: 1 / -1;
+    grid-row: 4;
+  }
+}
+
+@media (max-width: 920px) {
+  .info-console-grid {
+    grid-template-columns: minmax(0, 0.96fr) minmax(280px, 1.04fr);
+    grid-template-rows: auto auto minmax(0, 1fr) auto;
+  }
+
+  .info-console-identity,
+  .info-console-brief,
+  .info-console-status,
+  .info-console-main,
+  .info-console-side,
+  .info-console-supplemental {
+    padding: var(--system-panel-pad-compact);
+  }
+
+  .info-console-navwrap .system-uplink {
+    padding: var(--system-panel-pad-compact);
+  }
+
+  .info-console-title {
+    font-size: clamp(1.85rem, 4.5vw, 3.2rem);
+  }
+
+  .info-console-brief-copy,
+  .info-console-copy p,
+  .info-console-note,
+  .info-console-list,
+  .info-console-link-list,
+  .info-console-form-intro,
+  .info-console-form-note {
+    font-size: 12px;
+    line-height: 1.55;
+  }
+
+  .info-console-form-grid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .info-console-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    overflow: visible;
+  }
+
+  .info-console-identity,
+  .info-console-brief,
+  .info-console-status,
+  .info-console-navwrap,
+  .info-console-main,
+  .info-console-side {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .info-console-identity,
+  .info-console-brief,
+  .info-console-status,
+  .info-console-main,
+  .info-console-side,
+  .info-console-supplemental {
+    padding: var(--system-panel-pad-mobile);
+  }
+
+  .info-console-navwrap .system-uplink {
+    padding: var(--system-panel-pad-mobile);
+  }
+
+  .info-console-title {
+    font-size: 1.7rem;
+  }
+
+  .info-console-summary,
+  .info-console-brief-copy,
+  .info-console-copy p,
+  .info-console-note,
+  .info-console-list,
+  .info-console-link-list,
+  .info-console-form-intro,
+  .info-console-form-note {
+    font-size: 9px;
+  }
+
+  .info-console-readouts,
+  .info-console-stat-list,
+  .info-console-supplemental-list {
+    font-size: 8px;
+  }
+
+  .info-console-form-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .info-console-button,
+  .info-console-input {
+    padding: 10px 9px;
+  }
+
+  .info-console-textarea {
+    min-height: 120px;
+  }
+}
+
+.about-page .info-console-readouts {
+  gap: 8px;
+  font-size: 9px;
+}
+
+.about-page .info-console-readouts div {
+  padding-top: 8px;
+}
+
+.contact-page .info-console-main,
+.contact-page .info-console-side {
+  gap: 14px;
+}
+
+.contact-page .info-console-form-section,
+.contact-page .info-console-form {
+  gap: 10px;
+}
+
+.contact-page .info-console-textarea {
+  min-height: 136px;
+}
+
+@media (max-height: 900px) and (min-width: 641px) {
+  .contact-page .info-console-main,
+  .contact-page .info-console-side {
+    gap: 12px;
+  }
+
+  .contact-page .info-console-form-grid {
+    gap: 10px;
+  }
+
+  .contact-page .info-console-field {
+    gap: 6px;
+  }
+
+  .contact-page .info-console-input,
+  .contact-page .info-console-button {
+    padding: 10px;
+  }
+
+  .contact-page .info-console-textarea {
+    min-height: 108px;
+  }
+
+  .contact-page .info-console-form-intro,
+  .contact-page .info-console-form-note,
+  .contact-page .info-console-copy p,
+  .contact-page .info-console-note,
+  .contact-page .info-console-list,
+  .contact-page .info-console-link-list {
+    font-size: 12px;
+    line-height: 1.5;
+  }
+}

@@ -76,7 +76,6 @@ type GithubTelemetry = {
   activeRepos7d: number;
   lastPushAt?: string;
   lastPullRequestAt?: string;
-  lastIssueAt?: string;
   eventRate: string;
   latencyMs?: number;
 };
@@ -523,8 +522,6 @@ function describeGithubEvent(event: GithubPublicEvent) {
       return getFirstLine(payload?.commits?.[payload.commits.length - 1]?.message);
     case "PullRequestEvent":
       return `${payload?.action?.toUpperCase() ?? "PR"}: ${getFirstLine(payload?.pull_request?.title)}`;
-    case "IssuesEvent":
-      return `${payload?.action?.toUpperCase() ?? "ISSUE"}: ${getFirstLine(payload?.issue?.title)}`;
     case "CreateEvent":
       return `CREATED ${payload?.ref_type?.toUpperCase() ?? "REF"} ${payload?.ref ?? ""}`.trim();
     case "DeleteEvent":
@@ -539,7 +536,6 @@ function summarizeGithubEvents(events: GithubPublicEventsResponse, latencyMs: nu
   const latestEvent = events[0];
   const lastPushEvent = events.find((event) => event.type === "PushEvent");
   const lastPullRequestEvent = events.find((event) => event.type === "PullRequestEvent");
-  const lastIssueEvent = events.find((event) => event.type === "IssuesEvent");
   const events7d = events.filter((event) => isWithinDays(event.created_at, 7, now));
   const activeRepos7d = new Set(
     events7d.map((event) => event.repo?.name).filter((name): name is string => Boolean(name)),
@@ -562,7 +558,6 @@ function summarizeGithubEvents(events: GithubPublicEventsResponse, latencyMs: nu
     activeRepos7d,
     lastPushAt: getEventTime(lastPushEvent),
     lastPullRequestAt: getEventTime(lastPullRequestEvent),
-    lastIssueAt: getEventTime(lastIssueEvent),
     eventRate: events7d.length >= 3 ? "ACTIVE" : events7d.length > 0 ? "QUIET" : "IDLE",
     latencyMs,
   };
@@ -877,16 +872,15 @@ export function Welcome() {
           code: "GIT-01",
           title: "GitHub Activity",
           rows: [
-            ["Event Type", github.eventType],
-            ["Repository", github.repoName],
-            ["Event Age", formatRelativeTime(github.eventTime, clock.now)],
-            ["Public Activity", github.status === "ready" ? "NOMINAL" : githubSignal],
-            ["Commits Today", formatCount(github.commitsToday)],
-            ["Active Repos 7D", formatCount(github.activeRepos7d)],
-            ["Last Push", formatRelativeTime(github.lastPushAt, clock.now)],
-            ["Last PR", formatRelativeTime(github.lastPullRequestAt, clock.now)],
-            ["Last Issue", formatRelativeTime(github.lastIssueAt, clock.now)],
-            ["Event Rate", github.eventRate],
+            ["Type", github.eventType],
+            ["Repo", github.repoName],
+            ["Age", formatRelativeTime(github.eventTime, clock.now)],
+            ["Public", github.status === "ready" ? "NOMINAL" : githubSignal],
+            ["Commits", formatCount(github.commitsToday)],
+            ["Repos 7D", formatCount(github.activeRepos7d)],
+            ["Push", formatRelativeTime(github.lastPushAt, clock.now)],
+            ["PR", formatRelativeTime(github.lastPullRequestAt, clock.now)],
+            ["Rate", github.eventRate],
           ],
           status:
             github.status === "ready"
@@ -898,12 +892,12 @@ export function Welcome() {
           title: "Site Status",
           rows: [
             ["HTTP Status", siteStatus.httpStatus?.toString() ?? "CHECKING"],
-            ["Latency", formatLatency(siteStatus.latencyMs)],
             ["Last Check", formatRelativeTime(siteStatus.checkedAt, clock.now)],
-            ["Build Target", import.meta.env.MODE.toUpperCase()],
             ["Response Class", getResponseClass(siteStatus.httpStatus)],
-            ["Availability", getAvailability(siteStatus.status)],
             ["Latency Band", getLatencyBand(siteStatus.latencyMs)],
+            ["Latency", formatLatency(siteStatus.latencyMs)],
+            ["Build Target", import.meta.env.MODE.toUpperCase()],
+            ["Availability", getAvailability(siteStatus.status)],
             ["Check Period", `${siteCheckPeriodSeconds}S`],
           ],
           status:
@@ -915,14 +909,14 @@ export function Welcome() {
           code: "SVC-03",
           title: "Service Telemetry",
           rows: [
-            ["Weather Link", weatherSignal],
-            ["GitHub API", githubSignal],
-            ["Site Probe", siteSignal],
-            ["Data Bus", dataBusStatus],
+            ["WX", weatherSignal],
+            ["GitHub", githubSignal],
+            ["Site", siteSignal],
+            ["Bus", dataBusStatus],
             ["Open-Meteo RTT", formatLatency(weather.latencyMs)],
-            ["GitHub RTT", formatLatency(github.latencyMs)],
-            ["Site Origin", formatLatency(siteStatus.latencyMs)],
-            ["Dependency Count", `${formatCount(nominalDependencyCount)}/${formatCount(dependencySignals.length)}`],
+            ["GH RTT", formatLatency(github.latencyMs)],
+            ["Origin", formatLatency(siteStatus.latencyMs)],
+            ["Deps", `${formatCount(nominalDependencyCount)}/${formatCount(dependencySignals.length)}`],
             ["Faults", formatCount(faultCount)],
           ],
           status:
@@ -1082,9 +1076,9 @@ export function Welcome() {
             <div className="capability-list">
               {capabilityChannels.map(([id, label, detail]) => (
                 <div className="capability-channel" key={id}>
-                  <span>[{id}]</span>
-                  <span>{label}</span>
-                  <span>{detail}</span>
+                  <span className="capability-code">[{id}]</span>
+                  <span className="capability-title">{label}</span>
+                  <span className="capability-detail">{detail}</span>
                 </div>
               ))}
             </div>
@@ -1102,8 +1096,15 @@ export function Welcome() {
               </div>
               <div className="operations-card-title">{activeOperationsCard.title}</div>
               <div className="operations-readouts">
-                {activeOperationsCard.rows.map(([label, value]) => (
-                  <ReadoutRow key={label} label={label} value={value} />
+                {Array.from(
+                  { length: Math.ceil(activeOperationsCard.rows.length / 4) },
+                  (_, index) => activeOperationsCard.rows.slice(index * 4, index * 4 + 4),
+                ).map((columnRows, columnIndex) => (
+                  <div className="operations-readout-column" key={`${activeOperationsCard.code}-${columnIndex}`}>
+                    {columnRows.map(([label, value]) => (
+                      <ReadoutRow key={label} label={label} value={value} />
+                    ))}
+                  </div>
                 ))}
               </div>
               <p className="operations-status">{activeOperationsCard.status}</p>

@@ -1,4 +1,4 @@
-import { sanityClient, sanityImageUrl } from "./sanity";
+import { sanityFetch, sanityImageUrl } from "./sanity";
 import type { PortableTextBlock } from "@portabletext/react";
 
 export type SanityImage = Parameters<typeof sanityImageUrl>[0];
@@ -77,18 +77,18 @@ const postBySectionAndSlugQuery = `*[_type == "post" && slug.current == $slug &&
 }`;
 
 export async function getPhotos(): Promise<Photo[]> {
-  return sanityClient.fetch<Photo[]>(photoQuery);
+  return sanityFetch<Photo[]>(photoQuery);
 }
 
 export async function getPostPreviewsBySection(section: PostSection): Promise<PostPreview[]> {
-  return sanityClient.fetch<PostPreview[]>(postPreviewBySectionQuery, { section });
+  return sanityFetch<PostPreview[]>(postPreviewBySectionQuery, { section });
 }
 
 export async function getPostBySectionAndSlug(
   section: PostSection,
   slug: string
 ): Promise<PostDetail | null> {
-  return sanityClient.fetch<PostDetail | null>(postBySectionAndSlugQuery, { section, slug });
+  return sanityFetch<PostDetail | null>(postBySectionAndSlugQuery, { section, slug });
 }
 
 export async function getBlogPostPreviews(): Promise<PostPreview[]> {

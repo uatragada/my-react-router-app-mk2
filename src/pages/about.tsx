@@ -1,35 +1,142 @@
-import React from "react";
-import "../styles/about.css"; // Import your CSS file
+import { SystemPage, UplinkDirectory } from "../components/system-chrome";
+import "../styles/info-console.css";
 
 export default function About() {
   return (
-    <main className="about-container flex items-center justify-center pt-32 pb-4">
-      <div className="flex-1 flex flex-col items-center gap-8 min-h-64">
-        <header className="page-header flex flex-col items-center gap-8">
-          <div className="w-[800px] max-w-[300vw] p-4">
-            <h1>about</h1>
+    <SystemPage
+      pageClassName="about-page"
+      centerLabel="PROFILE BRIEF"
+      metaLabel="LIVE ROUTE / PROFILE MODE"
+      footerStart="PROFILE / SYSTEM OVERVIEW"
+      footerEnd="MODE / PERSONNEL DOSSIER"
+    >
+      <section className="info-console-grid" aria-label="About page console">
+        <article className="info-console-identity">
+          <div className="info-console-kicker">
+            <span>Profile</span>
+            <span>Brief</span>
+            <span>About</span>
           </div>
-        </header>
-        <section className="about-content flex flex-col items-center gap-4">
-          <div className="about-text w-[800px] max-w-[300vw] p-4">
+          <div className="info-console-title">
+            <span>About</span>
+          </div>
+          <p className="info-console-summary">
+            Systems-minded engineer focused on building practical software, sharpening messy workflows, and turning
+            ideas into reliable products.
+          </p>
+          <div className="info-console-readouts">
+            <div>
+              <span>Role</span>
+              <span>Software Engineer</span>
+            </div>
+            <div>
+              <span>Base</span>
+              <span>Scarborough - Maine</span>
+            </div>
+            <div>
+              <span>Focus</span>
+              <span>Systems + Product</span>
+            </div>
+          </div>
+        </article>
+
+        <article className="info-console-brief">
+          <div className="info-console-panel-heading">Mission Profile</div>
+          <p className="info-console-brief-copy">
+            I build by reducing ambiguity. The work usually starts with problem framing, moves into architecture, and
+            ends with something operational enough to survive real use instead of a neat demo.
+          </p>
+        </article>
+
+        <aside className="info-console-status">
+          <div className="info-console-panel-heading">Operator Status</div>
+          <div className="info-console-stat-list">
+            <div className="info-console-stat-row">
+              <span>Default Mode</span>
+              <span>Build + Refine</span>
+            </div>
+            <div className="info-console-stat-row">
+              <span>Bias</span>
+              <span>Structure First</span>
+            </div>
+            <div className="info-console-stat-row">
+              <span>Working Surface</span>
+              <span>Web + Systems</span>
+            </div>
+          </div>
+        </aside>
+
+        <div className="info-console-navwrap">
+          <UplinkDirectory />
+          <aside className="info-console-supplemental">
+            <div className="info-console-panel-heading">Current Interests</div>
+            <div className="info-console-supplemental-list">
+              <div>
+                <span>AI Systems</span>
+                <span>Active</span>
+              </div>
+              <div>
+                <span>Optimization</span>
+                <span>Active</span>
+              </div>
+              <div>
+                <span>Interfaces</span>
+                <span>Active</span>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <section className="info-console-main">
+          <div className="info-console-panel-heading">Working Pattern</div>
+          <ul className="info-console-list">
+            <li>
+              <strong>Problem framing</strong>
+              Start by finding the actual constraint instead of decorating the symptom.
+            </li>
+            <li>
+              <strong>Execution</strong>
+              Build clear systems, not just features, so the work holds up under real use.
+            </li>
+            <li>
+              <strong>Iteration</strong>
+              Treat each project as a chance to refine process, craft, and judgment.
+            </li>
+          </ul>
+
+          <div className="info-console-panel-heading">Site Notes</div>
+          <div className="info-console-copy">
             <p>
-              I’m a Computer Science graduate from the University of Pittsburgh. I like solving problems and building things that actually work.
+              This site is a working archive. It collects projects, experiments, and ideas I&apos;ve spent real time
+              building through.
             </p>
-            <br/>
             <p>
-              I usually approach problems by breaking them down and figuring out what’s actually going on under the hood. From there it’s just designing something better. I solve problems using web technologies, data analysis, and process development, depending on what the situation calls for.
-            </p>
-            <br/>
-            <p>
-              Outside of programming, I like hobbies that let me experiment in a different way. I play video games, take photos, and cook; games let me pick apart systems, photography gets me paying attention to composition, and cooking is a hands-on way to make something real.
-            </p>
-            <br/>
-            <p>
-              This site is where I publish my work. It’s a mix of projects, experiments, and things I’m currently building. Some stuff is polished, some isn’t—but everything here is something I’ve actually spent time thinking through and working on.
+              Some work here is polished, some of it is still evolving, but everything on the site reflects something
+              I&apos;ve actively explored, tested, or shipped.
             </p>
           </div>
         </section>
-      </div>
-    </main>
+
+        <aside className="info-console-side">
+          <div className="info-console-panel-heading">Field Notes</div>
+          <div className="info-console-copy">
+            <p>
+              My default approach is to break a problem down, understand what is really happening underneath, and then
+              design something cleaner and more dependable.
+            </p>
+            <p>
+              Outside of programming, I gravitate toward hobbies that reward experimentation. Photography sharpens
+              composition, games keep me thinking about systems, and cooking is another way to make something tangible
+              through iteration.
+            </p>
+          </div>
+
+          <div className="info-console-panel-heading">Operating Bias</div>
+          <p className="info-console-note">
+            Practical systems, clear interfaces, and architecture that makes the next decision easier.
+          </p>
+        </aside>
+      </section>
+    </SystemPage>
   );
 }

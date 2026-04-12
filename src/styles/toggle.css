@@ -1,16 +1,12 @@
 :root {
-    /** sunny side **/
-    --white-background: #fafafa;
-    --white-border: #fafafa;
-    --white-color: #fafafa;
-    --black-background: #121212;
-    --black-border: #121212;
-    /** dark side **/
-    --black-background: #121212;
-    --black-border: #121212;
-    --black-color: #000000;
-    --gray-border: #e8e8ea;
-    --gray-dots: #e8e8ea;
+    --white-background: var(--color-fg, #fafafa);
+    --white-border: var(--color-fg, #fafafa);
+    --white-color: var(--color-fg, #fafafa);
+    --black-background: var(--color-bg, #121212);
+    --black-border: var(--color-bg, #121212);
+    --black-color: var(--color-bg, #000000);
+    --gray-border: var(--site-line, #e8e8ea);
+    --gray-dots: var(--site-line, #e8e8ea);
     --toggle-glass-bg: rgb(255 255 255 / 12%);
     --toggle-glass-highlight: rgb(255 255 255 / 42%);
     --toggle-glass-rim: rgb(0 0 0 / 56%);
@@ -18,18 +14,6 @@
     --toggle-glass-border-width: 2px;
     --toggle-glass-surface: var(--toggle-glass-bg);
     --toggle-glass-filter: blur(1px) saturate(140%);
-}
-
-:root.dark {
-    --toggle-glass-bg: rgb(255 255 255 / 5%);
-    --toggle-glass-highlight: rgb(255 255 255 / 46%);
-    --toggle-glass-rim: rgb(255 255 255 / 34%);
-    --toggle-glass-rim-clear: rgb(0 0 0 / 0%);
-    --toggle-glass-surface:
-        radial-gradient(circle at 34% 28%, rgb(255 255 255 / 3%), transparent 34%),
-        radial-gradient(circle at 72% 78%, rgb(255 255 255 / 2%), transparent 38%),
-        var(--toggle-glass-bg);
-    --toggle-glass-filter: blur(4px) saturate(190%) contrast(112%);
 }
 
 @keyframes reverse {

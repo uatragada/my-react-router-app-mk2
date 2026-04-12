@@ -1,16 +1,3 @@
-html,
-body {
-  opacity: 0;
-  transition: opacity 1.2s ease-out;
-}
-
-html.loaded,
-body.loaded {
-  opacity: 1;
-  transform: none;
-  filter: none;
-}
-
 @keyframes from-left {
   0% {
     transform: translateX(-500px);
@@ -74,4 +61,13 @@ body.loaded {
 
 .animate-from-bottom {
   animation: from-bottom 1s ease-in-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-from-left,
+  .animate-from-right,
+  .animate-from-top,
+  .animate-from-bottom {
+    animation: none;
+  }
 }

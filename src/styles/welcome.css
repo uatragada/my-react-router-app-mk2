@@ -7,10 +7,12 @@
   --console-line-soft: var(--site-line-soft, rgb(244 241 234 / 22%));
   --console-accent: var(--site-accent, var(--console-fg));
   --console-emphasis: var(--site-emphasis, var(--console-fg));
+  --console-cell-padding: clamp(12px, 1.15vw, 16px);
   position: relative;
   width: 100%;
+  height: 100svh;
   min-height: 100svh;
-  overflow-x: hidden;
+  overflow: hidden;
   background:
     radial-gradient(circle at 52% 46%, rgb(255 255 255 / 4%), transparent 32rem),
     linear-gradient(180deg, var(--site-panel, #050505) 0%, var(--console-bg) 100%);
@@ -32,9 +34,11 @@
   display: flex;
   flex-direction: column;
   width: 100%;
+  height: 100svh;
   min-height: 100svh;
   margin: 0;
   border: 0;
+  overflow: hidden;
   background: rgb(2 2 2 / 84%);
 }
 
@@ -43,11 +47,12 @@
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: center;
-  gap: 16px;
+  gap: 18px;
   border-bottom: 1px solid var(--console-line);
-  padding: 10px 14px;
-  font-size: 11px;
-  line-height: 1.3;
+  padding: 10px 16px;
+  font-size: 10px;
+  line-height: 1.1;
+  letter-spacing: 0.18em;
 }
 
 .console-footer {
@@ -112,12 +117,13 @@
 .console-grid {
   display: grid;
   flex: 1;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(300px, 0.92fr);
+  height: 100%;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(320px, 0.9fr);
   grid-template-rows:
-    minmax(132px, auto)
-    272px
-    minmax(260px, 1fr)
-    minmax(170px, auto);
+    clamp(112px, 13svh, 146px)
+    clamp(220px, 29svh, 264px)
+    minmax(0, 0.96fr)
+    minmax(108px, 0.36fr);
   grid-template-areas:
     "identity identity identity"
     "mission focus mode"
@@ -129,9 +135,28 @@
 .console-cell {
   position: relative;
   min-width: 0;
+  min-height: 0;
   border-right: 1px solid var(--console-line);
   border-bottom: 1px solid var(--console-line);
-  padding: 18px;
+  padding: var(--console-cell-padding);
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.console-cell::-webkit-scrollbar {
+  display: none;
+}
+
+.console-cell::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.console-cell::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: var(--console-line-soft);
+  background-clip: padding-box;
 }
 
 .console-cell:nth-child(1),
@@ -142,8 +167,8 @@
 
 .cell-kicker,
 .cell-heading {
-  margin-bottom: 18px;
-  margin-top: 6px;
+  margin-bottom: clamp(10px, 1vw, 16px);
+  margin-top: 4px;
   color: var(--console-muted);
   font-size: 11px;
   line-height: 1.4;
@@ -171,7 +196,7 @@
   grid-area: identity;
   display: grid;
   grid-template-columns: minmax(130px, 0.34fr) minmax(240px, 0.86fr) minmax(300px, 0.8fr);
-  gap: 18px;
+  gap: clamp(12px, 1.2vw, 18px);
   align-items: center;
   min-height: 0;
 }
@@ -179,7 +204,7 @@
 .identity-cell h1 {
   margin: 0;
   color: var(--console-fg);
-  font-size: clamp(64px, 8vw, 112px);
+  font-size: clamp(56px, 7vw, 104px);
   font-weight: 500;
   line-height: 0.82;
   letter-spacing: 0.04em;
@@ -190,7 +215,7 @@
   gap: 4px;
   align-self: center;
   color: var(--console-fg);
-  font-size: 15px;
+  font-size: clamp(13px, 1vw, 15px);
   line-height: 1.12;
 }
 
@@ -230,8 +255,8 @@
   max-width: 46ch;
   margin: 0;
   color: var(--console-fg);
-  font-size: 16px;
-  line-height: 1.42;
+  font-size: clamp(13px, 1.05vw, 16px);
+  line-height: 1.36;
 }
 
 .status-copy {
@@ -241,7 +266,8 @@
 
 .capability-list {
   display: grid;
-  gap: 10px;
+  gap: 8px;
+  min-height: 0;
 }
 
 .capability-channel {
@@ -250,9 +276,9 @@
   gap: 10px;
   align-items: baseline;
   border-bottom: 1px solid var(--console-line-soft);
-  padding-bottom: 8px;
+  padding-bottom: 7px;
   color: var(--console-muted);
-  font-size: 10px;
+  font-size: 9px;
   line-height: 1.35;
 }
 
@@ -261,21 +287,24 @@
   padding-bottom: 0;
 }
 
-.capability-channel span:nth-child(2) {
+.capability-title {
   color: var(--console-fg);
   font-size: 12px;
+  line-height: 1.2;
 }
 
-.capability-channel span:nth-child(3) {
+.capability-detail {
   min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .operations-card {
   display: grid;
   grid-template-rows: auto auto minmax(0, 1fr) minmax(34px, auto);
   gap: 6px;
+  flex: 1;
   min-height: 0;
-  height: calc(100% - 31px);
+  height: auto;
   overflow: hidden;
   border: 1px solid var(--console-line-soft);
   padding: 8px;
@@ -298,12 +327,10 @@
 
 .operations-readouts {
   display: grid;
-  grid-template-columns:
-    max-content minmax(22px, 1fr) minmax(46px, 0.72fr)
-    max-content minmax(22px, 1fr) minmax(46px, 0.72fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
-  column-gap: 6px;
-  row-gap: 4px;
+  column-gap: 12px;
+  row-gap: 8px;
   min-height: 0;
   overflow: hidden;
   border-top: 1px solid var(--console-line-soft);
@@ -311,10 +338,19 @@
   padding: 6px 0;
 }
 
-.operations-readouts .readout-row {
-  display: contents;
+.operations-readout-column {
+  display: grid;
+  gap: 4px;
   min-width: 0;
-  font-size: 10px;
+}
+
+.operations-readouts .readout-row {
+  display: grid;
+  grid-template-columns: auto minmax(18px, 1fr) auto;
+  gap: 6px;
+  align-items: baseline;
+  min-width: 0;
+  font-size: 9px;
   line-height: 1.24;
 }
 
@@ -345,6 +381,14 @@
   white-space: nowrap;
 }
 
+.operations-readouts .readout-leader {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  align-self: center;
+  transform: translateY(0);
+}
+
 .info-cell .operations-status {
   max-width: none;
   min-height: 34px;
@@ -370,6 +414,7 @@
 
 .telemetry-stack {
   display: grid;
+  grid-template-columns: 1fr;
   gap: 8px;
 }
 
@@ -378,7 +423,7 @@
   grid-template-columns: 34px minmax(0, 1fr) 3ch;
   gap: 14px;
   align-items: center;
-  min-height: 54px;
+  min-height: clamp(42px, 4.8svh, 54px);
   border-top: 1px solid var(--console-line-soft);
   color: var(--console-fg);
   text-decoration: none;
@@ -519,7 +564,7 @@
 }
 
 .channel-copy span:first-child {
-  font-size: 15px;
+  font-size: clamp(12px, 1vw, 15px);
 }
 
 .channel-copy span:last-child {
@@ -538,8 +583,8 @@
   position: relative;
   display: flex;
   flex: 1;
-  min-height: 220px;
-  margin-top: 16px;
+  min-height: 148px;
+  margin-top: 12px;
   overflow: hidden;
   border: 1px solid var(--console-line-soft);
   padding: 8px;
@@ -686,7 +731,7 @@
   flex: 1;
   place-content: center;
   gap: 8px;
-  min-height: 180px;
+  min-height: 0;
   border: 1px dashed var(--console-line-soft);
   color: var(--console-dim);
   font-size: 11px;
@@ -700,7 +745,7 @@
   gap: 14px;
   align-items: center;
   border-bottom: 1px solid var(--console-line-soft);
-  padding: 10px 0;
+  padding: 8px 0;
 }
 
 .project-channel div {
@@ -710,7 +755,7 @@
 
 .project-channel div span:first-child {
   color: var(--console-fg);
-  font-size: 16px;
+  font-size: clamp(13px, 1vw, 16px);
 }
 
 .project-channel div span:last-child {
@@ -742,8 +787,8 @@
   grid-template-columns: repeat(16, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(0, 1fr));
   gap: 0;
-  min-height: 96px;
-  margin-top: 24px;
+  min-height: 72px;
+  margin-top: 18px;
   overflow: hidden;
   border: 1px solid var(--console-line-soft);
   background: #000000;
@@ -856,7 +901,12 @@
 @media (max-width: 1180px) {
   .console-grid {
     grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
-    grid-template-rows: auto auto auto auto auto;
+    grid-template-rows:
+      clamp(108px, 13svh, 140px)
+      clamp(220px, 29svh, 252px)
+      minmax(0, 0.76fr)
+      minmax(0, 0.84fr)
+      minmax(104px, 0.28fr);
     grid-template-areas:
       "identity identity"
       "mission focus"
@@ -865,46 +915,45 @@
       "reserved contact";
   }
 
-  .console-cell:nth-child(1),
-  .console-cell:nth-child(4),
-  .console-cell:nth-child(6) {
+  .console-cell {
     border-right: 1px solid var(--console-line);
   }
 
-  .console-cell:nth-child(1),
-  .console-cell:nth-child(3),
-  .console-cell:nth-child(6),
-  .console-cell:nth-child(8) {
+  .identity-cell,
+  .focus-cell,
+  .telemetry-cell,
+  .contact-cell {
     border-right: 0;
   }
 
   .identity-cell {
-    grid-template-columns: minmax(130px, 0.36fr) minmax(260px, 1fr);
+    grid-template-columns: minmax(120px, 0.34fr) minmax(0, 1fr);
   }
 
   .identity-meta {
     grid-column: 1 / -1;
   }
+
+  .operations-readouts {
+    grid-template-columns: 1fr;
+  }
+
+  .operations-readouts .readout-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+
+  .operations-readouts .readout-leader {
+    display: none;
+  }
 }
 
 @media (max-width: 820px) {
-  .welcome-console {
-    height: auto;
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-
-  .console-frame {
-    width: 100%;
-    height: auto;
-    min-height: 100svh;
-    margin: 0;
-  }
-
   .console-topbar,
   .console-footer {
     grid-template-columns: 1fr;
-    gap: 6px;
+    gap: 4px;
+    padding: 8px 10px;
   }
 
   .console-footer span:nth-child(2),
@@ -915,44 +964,117 @@
   }
 
   .console-grid {
-    display: block;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.96fr);
+    grid-template-rows:
+      clamp(110px, 18svh, 156px)
+      minmax(0, 0.62fr)
+      minmax(0, 0.88fr)
+      minmax(0, 1.08fr)
+      minmax(0, 0.34fr);
+    grid-template-areas:
+      "identity identity"
+      "mission focus"
+      "mode telemetry"
+      "projects telemetry"
+      "contact reserved";
   }
 
-  .console-cell,
-  .console-cell:nth-child(even),
-  .console-cell:nth-child(1),
-  .console-cell:nth-child(3),
-  .console-cell:nth-child(4),
-  .console-cell:nth-child(5),
-  .console-cell:nth-child(6),
-  .console-cell:nth-child(8) {
-    border-right: 0;
-    overflow: visible;
+  .console-cell {
+    border-right: 1px solid var(--console-line);
   }
 
   .identity-cell {
-    grid-template-columns: 1fr;
-    align-items: start;
+    grid-template-columns: minmax(98px, 0.42fr) minmax(0, 1fr);
+    align-items: center;
+    gap: 10px 16px;
   }
 
   .identity-cell h1 {
-    font-size: 72px;
+    font-size: clamp(52px, 14vw, 76px);
+  }
+
+  .identity-mark {
+    justify-content: flex-start;
+  }
+
+  .identity-meta {
+    gap: 5px;
+  }
+
+  .identity-cell,
+  .focus-cell,
+  .telemetry-cell,
+  .reserved-cell {
+    border-right: 0;
+  }
+
+  .info-cell p {
+    font-size: 12px;
+    line-height: 1.3;
+  }
+
+  .capability-list {
+    gap: 6px;
+  }
+
+  .capability-channel {
+    grid-template-columns: 28px minmax(0, 1fr);
+    gap: 2px 8px;
+    align-items: center;
+    padding-bottom: 4px;
+    font-size: 8px;
+  }
+
+  .capability-code {
+    grid-row: 1;
+  }
+
+  .capability-title {
+    font-size: 10px;
+    line-height: 1.1;
+  }
+
+  .capability-detail {
+    display: none;
+  }
+
+  .telemetry-map {
+    min-height: 112px;
+    margin-top: 10px;
+  }
+
+  .signal-field {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+    grid-template-rows: repeat(8, minmax(0, 1fr));
+    min-height: 84px;
   }
 
   .channel-link {
-    grid-template-columns: 28px minmax(0, 1fr) 3ch;
+    grid-template-columns: 26px minmax(0, 1fr) 3ch;
     gap: 10px;
   }
 
+  .channel-copy span:first-child {
+    font-size: 13px;
+  }
 }
 
 @media (max-width: 440px) {
   .console-cell {
-    padding: 6px;
+    padding: 8px;
   }
 
   .identity-cell h1 {
-    font-size: 54px;
+    font-size: 50px;
+  }
+
+  .console-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr);
+  }
+
+  .cell-heading::after {
+    margin-left: 10px;
   }
 
   .readout-row {
@@ -969,8 +1091,7 @@
   }
 
   .signal-field {
-    grid-template-columns: repeat(8, minmax(0, 1fr));
-    grid-template-rows: repeat(8, minmax(0, 1fr));
+    min-height: 68px;
   }
 
   .readout-leader {

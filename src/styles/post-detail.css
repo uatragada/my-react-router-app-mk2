@@ -1,0 +1,239 @@
+@import "./system-chrome.css";
+
+.post-record-layout {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(300px, 0.88fr) minmax(0, 1.12fr);
+  gap: var(--system-shell-gap);
+  padding: var(--system-shell-gap);
+  background: var(--site-line, rgb(255 255 255 / 78%));
+  overflow: hidden;
+}
+
+.post-record-layout > * {
+  min-width: 0;
+  min-height: 0;
+  background: var(--site-panel, #050505);
+}
+
+.post-record-sidebar {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+}
+
+.post-record-sidebar-top,
+.post-record-sidebar-nav,
+.post-record-main {
+  padding: var(--system-panel-pad);
+}
+
+.post-record-sidebar-top {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  border-bottom: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+}
+
+.post-record-back-link,
+.post-record-inline-link {
+  color: var(--site-emphasis, #fff);
+  text-decoration: none;
+  font-size: 11px;
+}
+
+.post-record-sidebar-readouts {
+  display: grid;
+  gap: 10px;
+  font-size: 10px;
+}
+
+.post-record-sidebar-readouts div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  padding-top: 10px;
+  border-top: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+}
+
+.post-record-sidebar-readouts span:first-child {
+  color: var(--site-muted, #8b8b8b);
+}
+
+.post-record-sidebar-readouts span:last-child {
+  color: var(--site-emphasis, #fff);
+  text-align: right;
+}
+
+.post-record-sidebar-nav {
+  min-height: 0;
+  align-self: end;
+}
+
+.post-record-main {
+  min-height: 0;
+  overflow: auto;
+}
+
+.post-record-message {
+  display: grid;
+  place-items: center;
+  min-height: 100%;
+  font-size: 11px;
+  color: var(--site-dim, rgb(255 255 255 / 36%));
+}
+
+.post-record-article {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  gap: 22px;
+}
+
+.post-record-header {
+  display: grid;
+  gap: 12px;
+}
+
+.post-record-kicker,
+.post-record-meta {
+  font-size: 10px;
+  color: var(--site-muted, #8b8b8b);
+}
+
+.post-record-kicker {
+  letter-spacing: 0.16em;
+}
+
+.post-record-header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 4.5rem);
+  line-height: 0.95;
+  color: var(--site-emphasis, #fff);
+}
+
+.post-record-meta {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.post-record-excerpt {
+  margin: 0;
+  max-width: 56ch;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--site-emphasis, #fff);
+}
+
+.post-record-cover img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+}
+
+.post-record-body {
+  display: grid;
+  gap: 16px;
+  font-size: 12px;
+  line-height: 1.8;
+  color: var(--site-dim, rgb(255 255 255 / 36%));
+}
+
+.post-record-body h2,
+.post-record-body h3 {
+  margin: 12px 0 0;
+  color: var(--site-emphasis, #fff);
+  line-height: 1.2;
+}
+
+.post-record-body h2 {
+  font-size: 1.35rem;
+}
+
+.post-record-body h3 {
+  font-size: 1.05rem;
+}
+
+.post-record-body p,
+.post-record-body blockquote {
+  margin: 0;
+}
+
+.post-record-body blockquote {
+  padding-left: 14px;
+  border-left: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+}
+
+.post-record-body img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
+}
+
+@media (max-width: 920px) {
+  .post-record-layout {
+    grid-template-columns: minmax(252px, 0.84fr) minmax(0, 1.16fr);
+  }
+
+  .post-record-sidebar-top,
+  .post-record-sidebar-nav,
+  .post-record-main {
+    padding: var(--system-panel-pad-compact);
+  }
+
+  .post-record-header h1 {
+    font-size: clamp(1.85rem, 4.8vw, 3.2rem);
+  }
+
+  .post-record-excerpt,
+  .post-record-body {
+    font-size: 11px;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 640px) {
+  .post-record-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .post-record-sidebar {
+    grid-template-rows: auto auto;
+  }
+}
+
+@media (max-width: 760px) {
+  .post-record-sidebar-top,
+  .post-record-sidebar-nav,
+  .post-record-main {
+    padding: var(--system-panel-pad-mobile);
+  }
+
+  .post-record-back-link,
+  .post-record-inline-link,
+  .post-record-sidebar-readouts,
+  .post-record-kicker,
+  .post-record-meta {
+    font-size: 8px;
+  }
+
+  .post-record-excerpt,
+  .post-record-body {
+    font-size: 9px;
+  }
+
+  .post-record-header h1 {
+    font-size: 1.6rem;
+  }
+
+  .post-record-meta {
+    flex-direction: column;
+    align-items: start;
+    gap: 6px;
+  }
+}
