@@ -27,11 +27,12 @@
 }
 
 .content-console-identity {
+  container-type: inline-size;
   grid-column: 1;
   grid-row: 1;
   display: grid;
   grid-template-rows: auto auto auto 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .content-console-manifest {
@@ -80,14 +81,14 @@
 .content-console-title {
   display: grid;
   gap: 4px;
-  font-size: clamp(2rem, 4vw, 4.6rem);
+  font-size: clamp(2rem, 8.8cqw, 4.6rem);
   line-height: 0.9;
   letter-spacing: 0.05em;
   color: var(--site-emphasis, #fff);
 }
 
 .content-console-summary {
-  max-width: 34ch;
+  max-width: 42ch;
   margin: 0;
   font-size: 11px;
   line-height: 1.5;
@@ -97,7 +98,7 @@
 .content-console-readouts {
   align-self: end;
   display: grid;
-  gap: 10px;
+  gap: 7px;
   font-size: 10px;
   line-height: 1.25;
 }
@@ -114,7 +115,7 @@
 .content-console-readouts div,
 .content-console-manifest-grid div,
 .content-console-readout-row {
-  padding-top: 10px;
+  padding-top: 8px;
   border-top: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
 }
 
@@ -148,7 +149,7 @@
 .content-console-signal-list,
 .content-console-viewer-readouts {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   font-size: 10px;
 }
 
@@ -265,14 +266,17 @@
 .content-console-signals {
   display: grid;
   grid-template-rows: auto auto 1fr;
-  gap: 12px;
+  gap: 6px;
+  overflow: hidden;
 }
 
 .content-console-feature-list {
   display: grid;
   align-content: start;
-  gap: 8px;
-  padding-top: 8px;
+  gap: 4px;
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 5px;
   border-top: 1px solid var(--site-line-soft, rgb(255 255 255 / 22%));
 }
 
@@ -280,8 +284,8 @@
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr);
   gap: 10px;
-  font-size: 10px;
-  line-height: 1.45;
+  font-size: 9px;
+  line-height: 1.25;
 }
 
 .content-console-feature-item span:first-child,

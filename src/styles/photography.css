@@ -19,6 +19,7 @@
 }
 
 .photo-archive-identity {
+  container-type: inline-size;
   grid-column: span var(--identity-cols);
   grid-row: span var(--identity-rows);
   display: grid;
@@ -39,10 +40,11 @@
   align-self: end;
   display: grid;
   gap: 4px;
-  font-size: clamp(1.8rem, 4vw, 4.2rem);
+  font-size: clamp(1.65rem, 17cqw, 2.85rem);
   line-height: 0.88;
   letter-spacing: 0.05em;
   color: var(--site-emphasis, #fff);
+  overflow-wrap: anywhere;
 }
 
 .photo-archive-readouts {

@@ -10,7 +10,7 @@
   --system-shell-gap: 1px;
   --system-shell-columns: minmax(0, 1.08fr) minmax(0, 1.08fr) minmax(320px, 0.9fr);
   --system-shell-rows: minmax(172px, 0.54fr) minmax(0, 1fr);
-  --system-shell-side-rows: minmax(0, 1fr) minmax(176px, auto);
+  --system-shell-side-rows: minmax(0, 1fr) minmax(168px, 168px);
   --system-shell-tablet-columns: minmax(0, 1fr) minmax(300px, 0.92fr);
   --system-panel-pad: clamp(12px, 1.15vw, 16px);
   --system-panel-pad-compact: 12px;

@@ -27,11 +27,12 @@
 }
 
 .info-console-identity {
+  container-type: inline-size;
   grid-column: 1;
   grid-row: 1;
   display: grid;
   grid-template-rows: auto auto auto 1fr;
-  gap: 12px;
+  gap: 10px;
 }
 
 .info-console-brief {
@@ -88,6 +89,15 @@
   background: var(--site-panel, #050505);
 }
 
+.info-console-supplemental {
+  align-content: start;
+  display: grid;
+  grid-template-rows: auto auto;
+  gap: 12px;
+  min-height: 0;
+  overflow: hidden;
+}
+
 .info-console-kicker {
   display: grid;
   gap: 4px;
@@ -99,7 +109,7 @@
 .info-console-title {
   display: grid;
   gap: 4px;
-  font-size: clamp(2rem, 4vw, 4.4rem);
+  font-size: clamp(2rem, min(4vw, 14cqw), 4.4rem);
   line-height: 0.9;
   letter-spacing: 0.05em;
   color: var(--site-emphasis, #fff);
@@ -114,7 +124,7 @@
 }
 
 .info-console-summary {
-  max-width: 34ch;
+  max-width: 42ch;
   font-size: 11px;
   line-height: 1.5;
 }
@@ -129,11 +139,19 @@
 .info-console-readouts,
 .info-console-stat-list,
 .info-console-supplemental-list {
-  align-self: end;
   display: grid;
   gap: 10px;
   font-size: 10px;
   line-height: 1.25;
+}
+
+.info-console-readouts,
+.info-console-stat-list {
+  align-self: end;
+}
+
+.info-console-supplemental-list {
+  align-self: start;
 }
 
 .info-console-readouts div,
