@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Welcome from "./pages/welcome"; // adjust if your path is different
 import About from "./pages/about"; // adjust if your path is different
 import Projects from "./pages/projects"; // adjust if your path is different
@@ -35,6 +36,7 @@ function App() {
         <Route path="/theme" element={<ThemePrototypes />} />
         <Route path="/theme-prototypes" element={<ThemePrototypes />} />
       </Routes>
+      <Analytics />
     </div>
   );
 }
