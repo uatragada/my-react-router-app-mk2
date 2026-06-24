@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import handler, { POST } from "./sanity-query";
-import { handleSanityRelay } from "../server/sanity-relay";
+import { handleSanityRelay } from "../server/sanity-relay.js";
 
-vi.mock("../server/sanity-relay", () => ({
+vi.mock("../server/sanity-relay.js", () => ({
   handleSanityRelay: vi.fn(),
 }));
 

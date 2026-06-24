@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import handler, { POST } from "./contact";
-import { handleContactRelay } from "../server/contact-relay";
+import { handleContactRelay } from "../server/contact-relay.js";
 
-vi.mock("../server/contact-relay", () => ({
+vi.mock("../server/contact-relay.js", () => ({
   handleContactRelay: vi.fn(),
 }));
 

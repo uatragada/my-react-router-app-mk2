@@ -1,4 +1,4 @@
-import { handleContactRelay } from "../server/contact-relay";
+import { handleContactRelay } from "../server/contact-relay.js";
 
 type NodeApiRequest = {
   method?: string;

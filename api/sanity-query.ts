@@ -1,4 +1,4 @@
-import { handleSanityRelay } from "../server/sanity-relay";
+import { handleSanityRelay } from "../server/sanity-relay.js";
 
 type NodeApiRequest = {
   method?: string;
