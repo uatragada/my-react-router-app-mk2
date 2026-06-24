@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { Suspense, lazy, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import worldMap from "../assets/BlankMap-World.svg";
 import { getThemeById, readStoredPortfolioThemeId } from "../lib/themeRegistry";
@@ -34,6 +34,11 @@ import {
   type SignalTileData,
 } from "../lib/welcomeTelemetry";
 import "../styles/welcome.css";
+
+const moduleShaderPresetId = "0fdc4bfb-7d5d-489b-aad1-bf9ecad51d14";
+const ModuleShaderPreview = lazy(() =>
+  import("shaders/react").then(({ Preview }) => ({ default: Preview })),
+);
 
 function ReadoutRow({
   label,
@@ -78,6 +83,19 @@ function SelectorIndicator() {
         <span>{"\\"}</span>
       </span>
     </span>
+  );
+}
+
+function ModuleShaderSlot() {
+  return (
+    <Suspense fallback={<div className="module-shader-fallback" aria-hidden="true" />}>
+      <ModuleShaderPreview
+        presetId={moduleShaderPresetId}
+        watermarkText=""
+        className="module-shader-preview"
+        aria-hidden="true"
+      />
+    </Suspense>
   );
 }
 
@@ -354,8 +372,7 @@ export function Welcome() {
           <section className="console-cell reserved-cell" aria-label="Reserved module bay">
             <div className="cell-heading">TEST-MODULE-00</div>
             <div className="reserved-bay">
-              <span>MODULE SLOT RESERVED</span>
-              <span>AWAITING FURTHER DEVELOPMENT</span>
+              <ModuleShaderSlot />
             </div>
           </section>
 
