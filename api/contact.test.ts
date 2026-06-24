@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { POST } from "./contact";
+import handler, { POST } from "./contact";
 import { handleContactRelay } from "../server/contact-relay";
 
 vi.mock("../server/contact-relay", () => ({
@@ -36,5 +36,37 @@ describe("api/contact", () => {
     );
     expect(response.status).toBe(200);
     await expect(response.json()).resolves.toEqual({ ok: true });
+  });
+
+  it("supports the default Vercel function handler", async () => {
+    handleContactRelayMock.mockResolvedValue({
+      status: 200,
+      body: { ok: true },
+    });
+
+    const response = {
+      statusCode: 0,
+      body: undefined as unknown,
+      status(statusCode: number) {
+        this.statusCode = statusCode;
+        return this;
+      },
+      setHeader: vi.fn(),
+      json(body: unknown) {
+        this.body = body;
+      },
+    };
+
+    await handler(
+      {
+        method: "POST",
+        body: { name: "Uday" },
+      },
+      response,
+    );
+
+    expect(handleContactRelayMock).toHaveBeenCalledWith("POST", { name: "Uday" }, expect.any(Object));
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toEqual({ ok: true });
   });
 });
