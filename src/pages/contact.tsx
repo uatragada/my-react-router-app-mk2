@@ -103,8 +103,7 @@ export default function Contact() {
         <article className="info-console-brief">
           <div className="info-console-panel-heading">Transmission Policy</div>
           <p className="info-console-brief-copy">
-            PRIORITY TRAFFIC ACCEPTED. INCLUDE CLEAR SUBJECT, REPLY CHANNEL, AND MISSION CONTEXT. CONCISE, LEGIBLE
-            MESSAGES ROUTE FASTEST.
+            Send a clear note with what you are working on, what you need, and the best way to reply.
           </p>
         </article>
 
@@ -255,23 +254,22 @@ export default function Contact() {
           <div className="info-console-panel-heading">Good Reasons To Reach Out</div>
           <ul className="info-console-list">
             <li>
-              <strong>Project inquiries</strong>
-              Reach out about software builds, product ideas, or systems-focused work.
+              <strong>Projects</strong>
+              Reach out if you want to talk through a build, an idea, or a problem you are trying to solve.
             </li>
             <li>
               <strong>Collaboration</strong>
-              Good fit for technical partnerships, experimentation, and shipping ideas.
+              I am open to working on useful software, AI tools, and focused prototypes.
             </li>
             <li>
-              <strong>General contact</strong>
-              If it relates to work on this site, LinkedIn is the best starting point.
+              <strong>Questions</strong>
+              If something on the site caught your attention, send a note.
             </li>
           </ul>
 
           <div className="info-console-panel-heading">Routing Note</div>
           <p className="info-console-note">
-            The form above routes through the site server. If you prefer direct channels or need to send references,
-            LinkedIn remains the cleanest fallback.
+            The form sends directly through this site. LinkedIn works too if that is easier.
           </p>
         </aside>
       </section>

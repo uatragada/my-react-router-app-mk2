@@ -208,3 +208,7 @@ export function applyPortfolioTheme(themeId: string) {
 export function applyStoredPortfolioTheme() {
   return applyPortfolioTheme(readStoredPortfolioThemeId());
 }
+
+export function initializePortfolioTheme() {
+  return applyStoredPortfolioTheme();
+}

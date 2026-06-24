@@ -43,8 +43,8 @@ export default function About() {
         <article className="info-console-brief">
           <div className="info-console-panel-heading">Mission Profile</div>
           <p className="info-console-brief-copy">
-            I build by reducing ambiguity. The work usually starts with problem framing, moves into architecture, and
-            ends with something operational enough to survive real use instead of a neat demo.
+            Convert unclear requirements into practical systems: define the problem, map the constraints, design the
+            architecture, and ship tools that hold up under real use.
           </p>
         </article>
 
@@ -121,19 +121,18 @@ export default function About() {
           <div className="info-console-panel-heading">Field Notes</div>
           <div className="info-console-copy">
             <p>
-              My default approach is to break a problem down, understand what is really happening underneath, and then
-              design something cleaner and more dependable.
+              Start with the actual constraint, separate signal from noise, and build the simplest system that can
+              handle the job.
             </p>
             <p>
-              Outside of programming, I gravitate toward hobbies that reward experimentation. Photography sharpens
-              composition, games keep me thinking about systems, and cooking is another way to make something tangible
-              through iteration.
+              Outside of software, I spend time on photography, games, and cooking. They all reward close attention,
+              fast feedback, and better decisions over repeated passes.
             </p>
           </div>
 
           <div className="info-console-panel-heading">Operating Bias</div>
           <p className="info-console-note">
-            Practical systems, clear interfaces, and architecture that makes the next decision easier.
+            Prefer useful tools, clear interfaces, and architecture that removes avoidable decisions.
           </p>
         </aside>
       </section>

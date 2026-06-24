@@ -11,14 +11,11 @@ import Contact from "./pages/contact"; // adjust if your path is different
 import ThemePrototypes from "./pages/theme-prototypes";
 import "./styles/enter-animation.css";
 import { useEffect } from "react";
-import { applyStoredPortfolioTheme } from "./lib/themeRegistry";
+import { initializePortfolioTheme } from "./lib/themeRegistry";
 
 function App() {
   useEffect(() => {
-    document.documentElement.classList.add("dark");
-    document.documentElement.classList.remove("light");
-    localStorage.setItem("theme", "dark");
-    applyStoredPortfolioTheme();
+    initializePortfolioTheme();
   }, []);
 
   return (
